@@ -8,7 +8,7 @@ var errorhandler = require('errorhandler');
 
 var user = require('./routes/user');
 var note = require('./routes/note');
-var mongo = require('./modules/services/mongo');
+var mongo = require('./modules/services/mongooseServices');
 
 var app = express();
 
