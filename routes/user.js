@@ -1,8 +1,18 @@
+exports.getUser = function(req, res){
+  var id = req.params.id;
+  res.json('{}');
+};
 
-/*
- * GET users listing.
- */
+exports.createUser = function(req, res){
+  res.json('{}');
+};
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
+exports.modifyUser = function(req, res){
+  var id = req.params.id;
+  res.json('{}');
+};
+
+exports.deleteUser = function(req, res){
+  var id = req.params.id;
+  res.json('{}');
 };
