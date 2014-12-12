@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "express": "*",
-    "mongo" : "*",
+    "mongodb" : "*",
     "grunt" : "*",
     "grunt-cli" : "*",
     "statsd" : "*"
