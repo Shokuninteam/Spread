@@ -14,7 +14,6 @@
     "body-parser": "*",
     "errorhandler":"*",
     "morgan": "*",
-    "serve-favicon": "*",
     "method-override" : "*"
   }
 }
