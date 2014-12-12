@@ -1,1 +1,1 @@
-var mongoServices = require('./services/mongooseServices');
+var mongoServices = require('./mongooseServices');

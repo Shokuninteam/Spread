@@ -1,6 +1,1 @@
-var mongoServices = require('./services/mongooseServices');
-
-exports.getuserbyid(id){
- mongoServices.
-
-}
+var mongoServices = require('./mongooseServices');
