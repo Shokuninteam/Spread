@@ -1,3 +1,6 @@
+var userServices = require('./services/userServices');
+var noteServices = require('./services/noteServices');
+
 exports.getUser = function(req, res){
   var id = req.params.id;
   res.json('{}');

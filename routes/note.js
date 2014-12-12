@@ -1,3 +1,7 @@
+var userServices = require('./services/userServices');
+var noteServices = require('./services/noteServices');
+
+
 exports.getNote = function(req, res){
   var id = req.params.id;
   res.json('{}');
