@@ -17,21 +17,26 @@ var schemas = {
     settings : {}
   })
 }
-exports.getUserById = function(id){
+exports.getUserById = function(id, callback){
 
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;
+  var userReturn;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function callback () {
-
+  db.once('open', function() {
+  
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.find({ _id: id }, function(err, user){
-      console.log(user);
-      mongoose.connection.close();
+      if(!err){
+        mongoose.connection.close();
+        console.log(user);
+        callback(user);
+      }
+      else
+        return console.log(err);
     });
   });
-
 }
 
 exports.createUser = function(user){

@@ -2,8 +2,9 @@ var userServices = require('../modules/services/userServices');
 var noteServices = require('../modules/services/noteServices');
 
 exports.getUser = function(req, res){
-  var user = userServices.getUserById(req.params.id);
-  res.json(user);
+  userServices.getUserById(req.params.id, function(user){
+  	res.json(user);
+  });
 };
 
 exports.createUser = function(req, res){

@@ -1,8 +1,9 @@
 var mongooseServices = require('./mongooseServices');
 
-exports.getUserById = function(id){
-  var user = mongooseServices.getUserById(id);
-  return user;
+exports.getUserById = function(id,callback){
+  mongooseServices.getUserById(id, function(user){
+  	callback(user);
+  });
 };
 
 exports.createUser = function(user){
