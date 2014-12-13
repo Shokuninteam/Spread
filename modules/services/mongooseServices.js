@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 
 var schemas = {
   userSchema : new mongoose.Schema({
-    id : Number,
-    nickName : String,
+    nickname : String,
     mail : String,
     pwd : String,
     avatar : String,
@@ -27,11 +26,10 @@ exports.getUserById = function(id){
 
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.find({ id: id }, function(err, user){
-      console.log(user)
+    UserModel.find({ _id: id }, function(err, user){
+      console.log(user);
+      mongoose.connection.close();
     });
-
-    mongoose.connection.close();
   });
 
 }
@@ -45,23 +43,25 @@ exports.createUser = function(user){
 
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    console.log(user);
-
     var instance = new UserModel();
 
     instance.nickname = user.nickname;
+    instance.mail = user.mail;
     instance.pwd = user.pwd;
     instance.avatar = user.avatar;
-    instance.pos.date = user.date;
-    instance.pos.x = user.x;
-    instance.pos.y = user.y;
+    var pos = {
+      date : new Date(),
+      x : user.x,
+      y : user.y
+    }
+    instance.pos.push(pos);
 
     instance.save(function (err, user) {
       if (err) return console.log(err);
       else console.log(user);
+      mongoose.connection.close();
     });
 
-    mongoose.connection.close();
   });
 
 }

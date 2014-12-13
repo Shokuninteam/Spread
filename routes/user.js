@@ -12,11 +12,10 @@ exports.createUser = function(req, res){
     mail : req.body.mail,
     pwd : req.body.pwd,
     avatar : req.body.avatar,
-    date : req.body.date,
     x : req.body.x,
     y : req.body.y
   }
-  
+
   userServices.createUser(user);
   res.json('{}');
 };
