@@ -18,12 +18,12 @@ var schemas = {
   }),
 
   noteSchema : new mongoose.Schema({
-    user : Number,
+    user : String,
     date : Date,
     content : String,
     tags : [String],
     spread : [{
-      user : Number,
+      user : String,
       date : Date,
       pos : {
         x : Number,
@@ -85,7 +85,35 @@ exports.createUser = function(user, callback){
       }
       mongoose.connection.close();
     });
-
   });
+}
 
+exports.createNote = function(note, callback){
+
+  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function() {
+
+    var NoteModel = mongoose.model('Note', schemas.noteSchema);
+
+    var instance = new NoteModel();
+
+    instance.user = note.user;
+    instance.content = note.content;
+    instance.tags = note.tags;
+
+    instance.save(function (err, user, affected) {
+      if (err) {
+        console.log(err);
+        callback(500);
+      }
+      else {
+        console.log(note);
+        if(affected == 1) callback(201);
+        else callback(500);
+      }
+      mongoose.connection.close();
+    });
+  });
 }

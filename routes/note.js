@@ -8,7 +8,14 @@ exports.getNote = function(req, res){
 };
 
 exports.createNote = function(req, res){
-  res.json('{}');
+  var note = {
+    user : req.body.user,
+    content : req.body.content,
+    tags : req.body.tags
+  }
+  noteServices.createNote(note, function(code){
+    res.status(code).end();
+  });
 };
 
 exports.getFavs = function(req, res){
