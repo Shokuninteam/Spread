@@ -15,6 +15,22 @@ var schemas = {
     spreaded : [Number],
     history : [Number],
     settings : {}
+  }),
+
+  noteSchema : new mongoose.Schema({
+    user : Number,
+    date : Date,
+    content : String,
+    tags : [String],
+    spread : [{
+      user : Number,
+      date : Date,
+      pos : {
+        x : Number,
+        y : Number
+      },
+      answer : String
+    }]
   })
 }
 exports.getUserById = function(id, callback){
