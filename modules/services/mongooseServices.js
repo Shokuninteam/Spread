@@ -39,7 +39,6 @@ exports.getUserById = function(id, callback){
 
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;
-  var userReturn;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
 
@@ -95,7 +94,6 @@ exports.getNoteById = function(id, callback){
 
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;
-  var userReturn;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
 
@@ -142,27 +140,23 @@ exports.createNote = function(note, callback){
   });
 }
 
-exports.deleteUser = function(note, callback){
+exports.deleteUser = function(id, callback){
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;
-  var userReturn;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
 
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.find({ _id: id }, function(err, user){
-      if(!err){
-        user.active = false;
-        user.save();
-        console.log(user);
-        mongoose.connection.close();
+    UserModel.remove(id, function(err){
+      if (!err) {
+        console.log("removed" + err);
         callback(200);
+      } else {
+        console.log(err);
+        callback(204);
       }
-      else{
-        callback(500);
-        return console.log(err);
-      }
+      mongoose.connection.close();
     });
   });
 }
