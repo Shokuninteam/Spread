@@ -8,13 +8,17 @@ exports.getUser = function(req, res){
 };
 
 exports.createUser = function(req, res){
-  var user = {
+var user = {
     nickname : req.body.nickname,
     mail : req.body.mail,
     pwd : req.body.pwd,
     avatar : req.body.avatar,
-    x : req.body.x,
-    y : req.body.y
+    pos : [{
+      date : req.body.pos[0].date,
+      x : req.body.pos[0].x,
+      y : req.body.pos[0].y
+    }],
+    active : req.body.active
   }
   userServices.createUser(user, function(code){
     res.status(code).end();
@@ -23,7 +27,21 @@ exports.createUser = function(req, res){
 
 exports.modifyUser = function(req, res){
   var id = req.params.id;
-  res.json('{}');
+  var user = {
+    nickname : req.body.nickname,
+    mail : req.body.mail,
+    pwd : req.body.pwd,
+    avatar : req.body.avatar,
+    pos : [{
+      date : req.body.pos[0].date,
+      x : req.body.pos[0].x,
+      y : req.body.pos[0].y
+    }],
+    active : req.body.active
+  }
+  userServices.modifyUser(id,user,function(code){
+  	res.status(code).end();
+  });
 };
 
 exports.deleteUser = function(req, res){

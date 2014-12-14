@@ -25,8 +25,8 @@ if ('development' == app.get('env')) {
 //API : user
 app.get('/users/:id', user.getUser); // V0 ok
 app.post('/users', user.createUser); // V0 ok
-app.put('/users/:id', user.modifyUser);
-app.delete('/users/:id', user.deleteUser); // V0 Doing
+app.put('/users/:id', user.modifyUser); //V0 ok 
+app.delete('/users/:id', user.deleteUser); // V0 ok?
 //API : note
 app.get('/notes/:id', note.getNote); // V0 ok
 app.post('/notes', note.createNote); // V0 ok
