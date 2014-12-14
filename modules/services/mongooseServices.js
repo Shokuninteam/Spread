@@ -108,9 +108,9 @@ exports.getNoteById = function(id, callback){
       }
       else
         return console.log(err);
-      });
     });
-  }
+  });
+}
 
 exports.createNote = function(note, callback){
 
@@ -138,6 +138,31 @@ exports.createNote = function(note, callback){
         else callback(500);
       }
       mongoose.connection.close();
+    });
+  });
+}
+
+exports.deleteUser = function(note, callback){
+  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
+  var db = mongoose.connection;
+  var userReturn;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function() {
+
+    var UserModel = mongoose.model('User', schemas.userSchema);
+
+    UserModel.find({ _id: id }, function(err, user){
+      if(!err){
+        user.active = false;
+        user.save();
+        console.log(user);
+        mongoose.connection.close();
+        callback(200);
+      }
+      else{
+        callback(500);
+        return console.log(err);
+      }
     });
   });
 }

@@ -7,3 +7,7 @@ exports.getUserById = function(id, callback){
 exports.createUser = function(user, callback){
   mongooseServices.createUser(user, callback);
 }
+
+exports.deleteUser = function(id, callback){
+  mongooseServices.deleteUser(id, callback);
+}
