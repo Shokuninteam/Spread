@@ -16,9 +16,9 @@ exports.createUser = function(req, res){
     x : req.body.x,
     y : req.body.y
   }
-
-  userServices.createUser(user);
-  res.json('{}');
+  userServices.createUser(user, function(code){
+    res.status(code).end();
+  });
 };
 
 exports.modifyUser = function(req, res){

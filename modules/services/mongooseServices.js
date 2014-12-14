@@ -24,13 +24,12 @@ exports.getUserById = function(id, callback){
   var userReturn;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
-  
+
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.find({ _id: id }, function(err, user){
       if(!err){
         mongoose.connection.close();
-        console.log(user);
         callback(user);
       }
       else
@@ -39,12 +38,12 @@ exports.getUserById = function(id, callback){
   });
 }
 
-exports.createUser = function(user){
+exports.createUser = function(user, callback){
 
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function callback () {
+  db.once('open', function() {
 
     var UserModel = mongoose.model('User', schemas.userSchema);
 
@@ -61,9 +60,13 @@ exports.createUser = function(user){
     }
     instance.pos.push(pos);
 
-    instance.save(function (err, user) {
-      if (err) return console.log(err);
-      else console.log(user);
+    instance.save(function (err, user, affected) {
+      if (err) callback(500);
+      else {
+        console.log(user);
+        if(affected == 1) callback(201);
+        else callback(500);
+      }
       mongoose.connection.close();
     });
 
