@@ -3,8 +3,9 @@ var noteServices = require('../modules/services/noteServices');
 
 
 exports.getNote = function(req, res){
-  var id = req.params.id;
-  res.json('{}');
+  noteServices.getNoteById(req.params.id, function(note){
+    res.json(note);
+  });
 };
 
 exports.createNote = function(req, res){
