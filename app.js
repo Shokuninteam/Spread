@@ -23,13 +23,13 @@ if ('development' == app.get('env')) {
 }
 
 //API : user
-app.get('/users/:id', user.getUser);
-app.post('/users', user.createUser);
+app.get('/users/:id', user.getUser); // V0 ok
+app.post('/users', user.createUser); // V0 ok
 app.put('/users/:id', user.modifyUser);
 app.delete('/users/:id', user.deleteUser);
 //API : note
-app.get('/notes/:id', note.getNote);
-app.post('/notes', note.createNote);
+app.get('/notes/:id', note.getNote); // V0 ok
+app.post('/notes', note.createNote); // V0 ok
 app.get('/users/:id/notes/favoris', note.getFavs);
 app.get('/users/:id/notes/history', note.gethistory);
 app.get('/users/:id/notes/spreaded', note.getSpreaded);
