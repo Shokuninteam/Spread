@@ -14,7 +14,8 @@ var schemas = {
     favs : [Number],
     spreaded : [Number],
     history : [Number],
-    settings : {}
+    settings : {},
+    active : Boolean
   }),
 
   noteSchema : new mongoose.Schema({
@@ -76,6 +77,7 @@ exports.createUser = function(user, callback){
       y : user.y
     }
     instance.pos.push(pos);
+    instance.active = true;
 
     instance.save(function (err, user, affected) {
       if (err) callback(500);
