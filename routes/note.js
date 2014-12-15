@@ -21,7 +21,9 @@ exports.createNote = function(req, res){
 
 exports.getFavs = function(req, res){
   var id = req.params.id;
-  res.json('{}');
+  noteServices.getFavs(id, function(favs){
+    res.json(favs);
+  });
 };
 
 exports.gethistory = function(req, res){
