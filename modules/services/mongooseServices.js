@@ -132,10 +132,10 @@ exports.deleteUser = function(id, callback){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findByIdAndRemove(id , function(err){
-      if (err) {
+      if (err){
         callback(204);
       } else {
-        console.log("removed");
+        console.log("removed" );
         callback(200);
       }
       mongoose.connection.close();

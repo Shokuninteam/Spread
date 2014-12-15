@@ -45,7 +45,7 @@ exports.modifyUser = function(req, res){
 };
 
 exports.deleteUser = function(req, res){
-  userServices.deleteUser(req.param.id, function(code){
+  userServices.deleteUser(req.params.id, function(code){
     res.status(code).end();
   });
 };

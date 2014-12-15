@@ -13,5 +13,5 @@ exports.deleteUser = function(id, callback){
 }
 
 exports.modifyUser = function(id, user, callback){
-	mongooseServices.modifyUser(id, user, callback);
+  mongooseServices.modifyUser(id, user, callback);
 }
