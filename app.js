@@ -30,7 +30,7 @@ app.delete('/users/:id', user.deleteUser); // V0 ok
 app.post('/users/:id/positions', user.addPosition); // V0 ok
 app.get('/users/:id/notes/favoris', note.getFavs); // V0 ok
 app.post('/users/:id/notes/favoris', note.addFav); // V0 ok
-app.get('/users/:id/notes/history', note.gethistory);
+app.get('/users/:id/notes/history', note.gethistory); // V0 ok
 app.get('/users/:id/notes/spreaded', note.getSpreaded);
 //API : note
 app.get('/notes/:id', note.getNote); // V0 ok

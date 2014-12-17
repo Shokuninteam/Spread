@@ -26,15 +26,15 @@ exports.addFav = function(req, res){
 };
 
 exports.getFavs = function(req, res){
-  var id = req.params.id;
-  noteServices.getFavs(id, function(favs){
+  noteServices.getFavs(req.params.id, function(favs){
     res.json(favs);
   });
 };
 
 exports.gethistory = function(req, res){
-  var id = req.params.id;
-  res.json('{}');
+  noteServices.getHistory(req.params.id, function(history){
+    res.json(history);
+  });
 };
 
 exports.getSpreaded = function(req, res){

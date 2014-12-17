@@ -26,3 +26,17 @@ exports.getFavs = function(id, callback){
 		}
 	});
 }
+
+exports.getHistory = function(id, callback){
+  var hist = new Array();
+  //handle user callback
+  mongooseServices.getUserById(id, function(user){
+    var notesCount = user[0].history.length;
+    for(var i=0; i<user[0].history.length; i++){
+      mongooseServices.getNoteById(user[0].history[i], function(note){
+        hist.push(note[0]);
+        if (hist.length === notesCount) callback(hist);
+      });
+    }
+  });
+}
