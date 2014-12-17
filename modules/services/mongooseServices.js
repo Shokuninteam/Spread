@@ -191,3 +191,7 @@ exports.createNote = function(note, callback){
     });
   });
 }
+
+exports.addPosition = function(user, callback){
+
+}

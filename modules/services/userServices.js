@@ -15,3 +15,7 @@ exports.deleteUser = function(id, callback){
 exports.modifyUser = function(id, user, callback){
   mongooseServices.modifyUser(id, user, callback);
 }
+
+exports.addPosition = function(user, callback){
+  mongooseServices.addPosition(user, callback);
+}

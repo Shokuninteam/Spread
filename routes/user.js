@@ -45,3 +45,15 @@ exports.deleteUser = function(req, res){
     res.status(code).end();
   });
 };
+
+exports.addPosition = function(req, res){
+  var user = {
+    id : req.params.id,
+    x : req.body.x,
+    y : req.body.y
+  }
+
+  userServices.addPosition(user, function(code){
+    res.status(code).end();
+  });
+};
