@@ -19,6 +19,12 @@ exports.createNote = function(req, res){
   });
 };
 
+exports.addFav = function(req, res){
+  noteServices.addFav(req.params.id, req.body.noteId, function(code){
+    res.status(code).end();
+  });
+};
+
 exports.getFavs = function(req, res){
   var id = req.params.id;
   noteServices.getFavs(id, function(favs){

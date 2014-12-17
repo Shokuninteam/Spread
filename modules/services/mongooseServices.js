@@ -11,7 +11,7 @@ var schemas = {
       x : Number,
       y : Number
     }],
-    favs : [Number],
+    favs : [String],
     spreaded : [Number],
     history : [Number],
     settings : {},
@@ -194,6 +194,32 @@ exports.createNote = function(note, callback){
         else callback(500);
       }
       mongoose.connection.close();
+    });
+  });
+}
+
+exports.addFav = function(id, noteId, callback){
+  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function(){
+    var UserModel = mongoose.model('User', schemas.userSchema);
+
+    UserModel.findById(id, function(err, instance){
+      if(err) callback(204);
+      else{
+        console.log(instance);
+        instance.favs.push(noteId);
+        instance.save(function (err, instance, affected) {
+          if (err) callback(204);
+          else {
+            console.log(instance);
+            if(affected == 1) callback(200);
+            else callback(204);
+          }
+          mongoose.connection.close();
+        });
+      }
     });
   });
 }
