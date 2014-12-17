@@ -12,8 +12,8 @@ var schemas = {
       y : Number
     }],
     favs : [String],
-    spreaded : [Number],
-    history : [Number],
+    spreaded : [String],
+    history : [String],
     settings : {},
     active : Boolean
   }),
@@ -33,6 +33,24 @@ var schemas = {
       answer : String
     }]
   })
+}
+
+var innerFunction = {
+  addHistory : function(idUser, idNote){
+    mongoose.connect('mongodb://127.0.0.1:27017/Spread');
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function(){
+      var UserModel = mongoose.model('User', schemas.userSchema);
+
+      UserModel.findById(idUser, function(err, instance){
+          instance.history.push(idNote);
+          instance.save(function (err, instance, affected) {
+            mongoose.connection.close();
+          });
+      });
+    });
+  }
 }
 // User services
 exports.getUserById = function(id, callback){
@@ -183,17 +201,19 @@ exports.createNote = function(note, callback){
     instance.content = note.content;
     instance.tags = note.tags;
 
-    instance.save(function (err, user, affected) {
+    instance.save(function (err, note, affected) {
+      mongoose.connection.close();
       if (err) {
         console.log(err);
         callback(500);
       }
       else {
-        console.log(note);
-        if(affected == 1) callback(201);
+        if(affected == 1){
+          innerFunction.addHistory(note.user, note.id);
+          callback(201);
+        }
         else callback(500);
       }
-      mongoose.connection.close();
     });
   });
 }
