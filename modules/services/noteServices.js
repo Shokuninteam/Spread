@@ -31,6 +31,20 @@ exports.getFavs = function(id, callback){
 	});
 }
 
+exports.getSpreaded = function(id, callback){
+  var spread = new Array();
+  //handle user callback
+  mongooseServices.getUserById(id, function(user){
+    var notesCount = user[0].spreaded.length;
+    for(var i=0; i<user[0].spreaded.length; i++){
+      mongooseServices.getNoteById(user[0].spreaded[i], function(note){
+        spread.push(note[0]);
+        if (spread.length === notesCount) callback(spread);
+      });
+    }
+  });
+}
+
 exports.getHistory = function(id, callback){
   var hist = new Array();
   //handle user callback

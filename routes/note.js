@@ -44,8 +44,9 @@ exports.gethistory = function(req, res){
 };
 
 exports.getSpreaded = function(req, res){
-  var id = req.params.id;
-  res.json('{}');
+  noteServices.getSpreaded(req.params.id, function(spreaded){
+    res.json(spreaded);
+  });
 };
 
 exports.getUsersPositions = function(req, res){
