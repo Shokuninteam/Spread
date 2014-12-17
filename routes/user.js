@@ -12,7 +12,9 @@ exports.getUser = function(req, res){
 };
 
 exports.createUser = function(req, res){
-var user = {
+ if(req.body == null) res.status(404).end("Syntax error");
+ else{
+  var user = {
     nickname : req.body.nickname,
     mail : req.body.mail,
     pwd : req.body.pwd,
@@ -22,10 +24,17 @@ var user = {
       y : req.body.y
     }]
   }
+  console.log(req.url);
 
-  userServices.createUser(user, function(code){
-    res.status(code).end();
+  userServices.createUser(user, function(code, id){
+    if(code == 201)
+      res.setHeader("url", req.url + "/" + id);
+      res.status(code).end("User added");
+    if(code == 409)
+      res.status(code).end("Conflict : Unable to add User");
   });
+ }
+ 
 };
 
 exports.modifyUser = function(req, res){

@@ -97,11 +97,11 @@ exports.createUser = function(user, callback){
     instance.active = true;
 
     instance.save(function (err, user, affected) {
-      if (err) callback(500);
+      if (err) callback(409);
       else {
         console.log(user);
-        if(affected == 1) callback(201);
-        else callback(500);
+        if(affected == 1) callback(201, user.id);
+        else callback(409);
       }
       mongoose.connection.close();
     });
