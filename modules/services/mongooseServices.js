@@ -244,6 +244,32 @@ exports.addFav = function(id, noteId, callback){
   });
 }
 
+exports.addSpreaded = function(id, noteId, callback){
+  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function(){
+    var UserModel = mongoose.model('User', schemas.userSchema);
+
+    UserModel.findById(id, function(err, instance){
+      if(err) callback(204);
+      else{
+        console.log(instance);
+        instance.spreaded.push(noteId);
+        instance.save(function (err, instance, affected) {
+          if (err) callback(204);
+          else {
+            console.log(instance);
+            if(affected == 1) callback(200);
+            else callback(204);
+          }
+          mongoose.connection.close();
+        });
+      }
+    });
+  });
+}
+
 exports.addPosition = function(user, callback){
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;

@@ -25,6 +25,12 @@ exports.addFav = function(req, res){
   });
 };
 
+exports.addSpreaded = function(req, res){
+  noteServices.addSpreaded(req.params.id, req.body.noteId, function(code){
+    res.status(code).end();
+  });
+};
+
 exports.getFavs = function(req, res){
   noteServices.getFavs(req.params.id, function(favs){
     res.json(favs);
