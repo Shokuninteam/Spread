@@ -12,7 +12,7 @@ exports.getUser = function(req, res){
 };
 
 exports.createUser = function(req, res){
- if(req.body == null) res.status(404).end("Syntax error");
+ if(req.body == null) res.status(400).end("Syntax error");
  else{
   var user = {
     nickname : req.body.nickname,
@@ -24,7 +24,6 @@ exports.createUser = function(req, res){
       y : req.body.y
     }]
   }
-  console.log(req.url);
 
   userServices.createUser(user, function(code, id){
     if(code == 201)
@@ -39,34 +38,51 @@ exports.createUser = function(req, res){
 
 exports.modifyUser = function(req, res){
   var id = req.params.id;
-  var user = {
-    nickname : req.body.nickname,
-    mail : req.body.mail,
-    pwd : req.body.pwd,
-    avatar : req.body.avatar,
-    pos : [{
-      x : req.body.x,
-      y : req.body.y
-    }]
-  }
-  userServices.modifyUser(id,user,function(code){
-  	res.status(code).end();
-  });
+  if(req.body == null) res.status(400).end("Syntax error");
+  else{
+    var user = {
+      nickname : req.body.nickname,
+      mail : req.body.mail,
+      pwd : req.body.pwd,
+      avatar : req.body.avatar,
+      pos : [{
+        x : req.body.x,
+        y : req.body.y
+      }]
+    }
+    userServices.modifyUser(id,user,function(code){
+      if(code == 404)
+        res.status(code).end("Unable to modify user");
+      else
+        res.status(code).end("User modified");
+    });
+}
 };
 
 exports.deleteUser = function(req, res){
   userServices.deleteUser(req.params.id, function(code){
-    res.status(code).end();
+    if(code == 204)
+     res.status(code).end("User deleted");
+    else
+      res.status(code).end("Unable to delete");
   });
 };
 
 exports.addPosition = function(req, res){
-  var user = {
-    id : req.params.id,
-    x : req.body.x,
-    y : req.body.y
-  }
-  userServices.addPosition(user, function(code){
-    res.status(code).end();
-  });
+  if(req.body == null) res.status(400).end("Syntax error");
+  else{
+    var user = {
+      id : req.params.id,
+      x : req.body.x,
+      y : req.body.y
+    }
+    userServices.addPosition(user, function(code){
+      if(code == 200)
+        res.status(code).end("Position added");
+      if(code == 409)
+        res.status(code).end("Conflict : Unable to add user");
+      if(code == 404)
+        res.status(code).end("User unable");
+    });
+}
 };

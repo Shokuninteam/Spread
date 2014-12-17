@@ -116,24 +116,26 @@ exports.modifyUser = function(id, instance, callback){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findById(id, function(err, user){
-      if(err) callback(204);
+      if(err) callback(404);
       else{
-        console.log(instance);
-        if(instance.nickname) user.nickname = instance.nickname;
-        if(instance.mail) user.mail = instance.mail;
-        if(instance.pwd) user.pwd = instance.pwd;
-        if(instance.avatar) user.avatar = instance.avatar;
-        if(instance.pos[0].x) user.pos[0].x = instance.pos[0].x;
-        if(instance.pos[0].y) user.pos[0].y = instance.pos[0].y;
-        user.save(function (err, user, affected) {
-          if (err) callback(204);
-          else {
-            console.log(user);
-            if(affected == 1) callback(200);
-            else callback(204);
-          }
-        mongoose.connection.close();
-        });
+        if(user == 0) callback(404);
+        else{
+          if(instance.nickname) user.nickname = instance.nickname;
+          if(instance.mail) user.mail = instance.mail;
+          if(instance.pwd) user.pwd = instance.pwd;
+          if(instance.avatar) user.avatar = instance.avatar;
+          if(instance.pos[0].x) user.pos[0].x = instance.pos[0].x;
+          if(instance.pos[0].y) user.pos[0].y = instance.pos[0].y;
+          user.save(function (err, user, affected) {
+            if (err) callback(404);
+            else {
+              if(affected == 1) callback(200);
+              else callback(404);
+            }
+          mongoose.connection.close();
+          });
+        }
+
       }
       });
   });
@@ -147,16 +149,16 @@ exports.deleteUser = function(id, callback){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findById(id, function(err, instance){
-      if(err) callback(204);
+      if(err) callback(404);
       else{
         console.log(instance);
         instance.active = false;
         instance.save(function (err, instance, affected) {
-          if (err) callback(204);
+          if (err) callback(404);
           else {
             console.log(instance);
-            if(affected == 1) callback(200);
-            else callback(204);
+            if(affected == 1) callback(204);
+            else callback(404);
           }
           mongoose.connection.close();
         });
@@ -278,9 +280,8 @@ exports.addPosition = function(user, callback){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findById(user.id, function(err, instance){
-      if(err) callback(204);
+      if(err) callback(404);
       else{
-        console.log(instance);
         var pos = {
           date : new Date(),
           x : user.x,
@@ -288,11 +289,10 @@ exports.addPosition = function(user, callback){
         }
         instance.pos.push(pos);
         instance.save(function (err, instance, affected) {
-          if (err) callback(204);
+          if (err) callback(409);
           else {
-            console.log(instance);
             if(affected == 1) callback(200);
-            else callback(204);
+            else callback(409);
           }
           mongoose.connection.close();
         });
