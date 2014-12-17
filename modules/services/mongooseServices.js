@@ -72,8 +72,8 @@ exports.createUser = function(user, callback){
     instance.avatar = user.avatar;
     var pos = {
       date : new Date(),
-      x : user.pos[0].x,
-      y : user.pos[0].y
+      x : user.x,
+      y : user.y
     }
     instance.pos.push(pos);
     instance.active = true;
@@ -97,7 +97,7 @@ exports.modifyUser = function(id, instance, callback){
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.findById(id, function(err, user){ 
+    UserModel.findById(id, function(err, user){
       if(err) callback(204);
       else{
         console.log(instance);
@@ -193,5 +193,3 @@ exports.createNote = function(note, callback){
     });
   });
 }
-
-

@@ -14,11 +14,10 @@ var user = {
     pwd : req.body.pwd,
     avatar : req.body.avatar,
     pos : [{
-      date : req.body.pos[0].date,
-      x : req.body.pos[0].x,
-      y : req.body.pos[0].y
-    }],
-    active : req.body.active
+      date : req.body.date,
+      x : req.body.x,
+      y : req.body.y
+    }]
   }
   userServices.createUser(user, function(code){
     res.status(code).end();
