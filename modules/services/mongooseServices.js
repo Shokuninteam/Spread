@@ -107,7 +107,6 @@ exports.modifyUser = function(id, instance, callback){
         if(instance.avatar) user.avatar = instance.avatar;
         if(instance.pos[0].x) user.pos[0].x = instance.pos[0].x;
         if(instance.pos[0].y) user.pos[0].y = instance.pos[0].y;
-        if(instance.pos[0].date) user.pos[0].date = instance.pos[0].date;
         user.save(function (err, user, affected) {
           if (err) callback(204);
           else {

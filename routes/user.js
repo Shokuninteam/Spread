@@ -31,7 +31,6 @@ exports.modifyUser = function(req, res){
     pwd : req.body.pwd,
     avatar : req.body.avatar,
     pos : [{
-      date : req.body.date,
       x : req.body.x,
       y : req.body.y
     }]
