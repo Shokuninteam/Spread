@@ -11,7 +11,7 @@ exports.createNote = function(note, callback){
 
 exports.getFavs = function(id, callback){
 	var favs = new Array();
-	//handle user callback 
+	//handle user callback
 	mongooseServices.getUserById(id, function(user){
 		for(var i in user.favs){
 			//Handle note callback
