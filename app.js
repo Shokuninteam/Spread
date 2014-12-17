@@ -27,13 +27,13 @@ app.get('/users/:id', user.getUser); // V0 ok
 app.post('/users', user.createUser); // V0 ok
 app.put('/users/:id', user.modifyUser); //V0 ok
 app.delete('/users/:id', user.deleteUser); // V0 ok
-app.post('/users/:id/positions', user.addPosition); 
-//API : note
-app.get('/notes/:id', note.getNote); // V0 ok
-app.post('/notes', note.createNote); // V0 ok
+app.post('/users/:id/positions', user.addPosition); // V0 ok
 app.get('/users/:id/notes/favoris', note.getFavs); // V0 doing
 app.get('/users/:id/notes/history', note.gethistory);
 app.get('/users/:id/notes/spreaded', note.getSpreaded);
+//API : note
+app.get('/notes/:id', note.getNote); // V0 ok
+app.post('/notes', note.createNote); // V0 ok
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Port ' + app.get('port'));

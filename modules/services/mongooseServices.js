@@ -125,18 +125,24 @@ exports.deleteUser = function(id, callback){
   mongoose.connect('mongodb://127.0.0.1:27017/Spread');
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function() {
-
+  db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.findByIdAndRemove(id , function(err){
-      if (err){
-        callback(204);
-      } else {
-        console.log("removed" );
-        callback(200);
+    UserModel.findById(id, function(err, instance){
+      if(err) callback(204);
+      else{
+        console.log(instance);
+        instance.active = false;
+        instance.save(function (err, instance, affected) {
+          if (err) callback(204);
+          else {
+            console.log(instance);
+            if(affected == 1) callback(200);
+            else callback(204);
+          }
+          mongoose.connection.close();
+        });
       }
-      mongoose.connection.close();
     });
   });
 }
@@ -199,7 +205,7 @@ exports.addPosition = function(user, callback){
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.findById(id, function(err, instance){
+    UserModel.findById(user.id, function(err, instance){
       if(err) callback(204);
       else{
         console.log(instance);
