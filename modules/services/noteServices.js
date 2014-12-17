@@ -17,12 +17,12 @@ exports.getFavs = function(id, callback){
 	var favs = new Array();
 	//handle user callback
 	mongooseServices.getUserById(id, function(user){
-		for(var i in user.favs){
-			//Handle note callback
-			mongooseServices.getNoteById(favs[i], function(note){
-				favs.push(note);
+    var notesCount = user[0].favs.length;
+		for(var i=0; i<user[0].favs.length; i++){
+			mongooseServices.getNoteById(user[0].favs[i], function(note){
+        favs.push(note[0]);
+        if (favs.length === notesCount) callback(favs);
 			});
 		}
 	});
-	callback(favs);
 }
