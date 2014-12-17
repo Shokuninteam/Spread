@@ -18,6 +18,7 @@ var user = {
       y : req.body.y
     }]
   }
+
   userServices.createUser(user, function(code){
     res.status(code).end();
   });
@@ -52,7 +53,6 @@ exports.addPosition = function(req, res){
     x : req.body.x,
     y : req.body.y
   }
-
   userServices.addPosition(user, function(code){
     res.status(code).end();
   });

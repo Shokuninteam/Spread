@@ -72,8 +72,8 @@ exports.createUser = function(user, callback){
     instance.avatar = user.avatar;
     var pos = {
       date : new Date(),
-      x : user.x,
-      y : user.y
+      x : user.pos[0].x,
+      y : user.pos[0].y
     }
     instance.pos.push(pos);
     instance.active = true;
@@ -204,9 +204,9 @@ exports.addPosition = function(user, callback){
       else{
         console.log(instance);
         var pos = {
-          date = new Date(),
-          x = user.x,
-          y = user.y
+          date : new Date(),
+          x : user.x,
+          y : user.y
         }
         instance.pos.push(pos);
         instance.save(function (err, instance, affected) {
