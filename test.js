@@ -119,9 +119,19 @@ describe('Spread Express server-side : Node REST API', function(){
       noteId : current.noteIds[0]
     })
     .end(function(e, res){
-      expect(res.status).to.be.equal(200);      
+      expect(res.status).to.be.equal(200);
       done();
     })
   })
 
+  it('it should add the second note as spreaded by the user', function(done){
+    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    .send({
+      noteId : current.noteIds[1]
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      done();
+    })
+  })
 })

@@ -199,24 +199,21 @@ exports.createNote = function(note, callback){
 
 exports.addFav = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function(){
-    var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.findById(id, function(err, instance){
-      if(err) callback(404);
-      else{
-        console.log(instance);
-        instance.favs.push(noteId);
-        instance.save(function (err, instance, affected) {
-          if (err) callback(404);
-          else {
-            console.log(instance);
-            if(affected == 1) callback(200);
-            else callback(404);
-          }
-        });
-      }
-    });
+  var UserModel = mongoose.model('User', schemas.userSchema);
+
+  UserModel.findById(id, function(err, instance){
+    if(err) callback(404);
+    else{
+      instance.favs.push(noteId);
+      instance.save(function (err, instance, affected) {
+        if (err) callback(404);
+        else {
+          if(affected == 1) callback(200);
+          else callback(404);
+        }
+      });
+    }
   });
 }
 
@@ -244,26 +241,25 @@ exports.addSpreaded = function(id, noteId, callback){;
 
 exports.addPosition = function(user, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function(){
-    var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.findById(user.id, function(err, instance){
-      if(err) callback(404);
-      else{
-        var pos = {
-          date : new Date(),
-          x : user.x,
-          y : user.y
-        }
-        instance.pos.push(pos);
-        instance.save(function (err, instance, affected) {
-          if (err) callback(409);
-          else {
-            if(affected == 1) callback(200);
-            else callback(409);
-          }
-        });
+  var UserModel = mongoose.model('User', schemas.userSchema);
+
+  UserModel.findById(user.id, function(err, instance){
+    if(err) callback(404);
+    else{
+      var pos = {
+        date : new Date(),
+        x : user.x,
+        y : user.y
       }
-    });
+      instance.pos.push(pos);
+      instance.save(function (err, instance, affected) {
+        if (err) callback(409);
+        else {
+          if(affected == 1) callback(200);
+          else callback(409);
+        }
+      });
+    }
   });
 }
