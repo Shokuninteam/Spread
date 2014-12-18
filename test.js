@@ -62,7 +62,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('should creat a note assigned to the previously updated user', function(done){
+  it('should create a note assigned to the previously updated user', function(done){
     superagent.post('http://localhost:3030/notes')
     .send({
         user : current.userId,
