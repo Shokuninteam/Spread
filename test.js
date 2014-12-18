@@ -109,6 +109,8 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
       expect(res.body.length).to.be.equal(2);
+      expect(res.body[0]._id).to.be.equal(current.noteIds[0]);
+      expect(res.body[1]._id).to.be.equal(current.noteIds[1]);
       done();
     })
   })
@@ -131,6 +133,18 @@ describe('Spread Express server-side : Node REST API', function(){
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
+      done();
+    })
+  })
+
+  it('it should retrieve the 2 notes as part of the user\'s history', function(done){
+    superagent.get('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    .send()
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      expect(res.body.length).to.be.equal(2);
+      expect(res.body[0]._id).to.be.equal(current.noteIds[0]);
+      expect(res.body[1]._id).to.be.equal(current.noteIds[1]);
       done();
     })
   })

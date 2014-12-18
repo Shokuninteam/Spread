@@ -21,10 +21,10 @@ exports.getFavs = function(id, callback){
 	var favs = new Array();
 	//handle user callback
 	mongooseServices.getUserById(id, function(user){
-    var notesCount = user[0].favs.length;
-		for(var i=0; i<user[0].favs.length; i++){
-			mongooseServices.getNoteById(user[0].favs[i], function(note){
-        favs.push(note[0]);
+    var notesCount = user.favs.length;
+		for(var i=0; i<user.favs.length; i++){
+			mongooseServices.getNoteById(user.favs[i], function(note){
+        favs.push(note);
         if (favs.length === notesCount) callback(favs);
 			});
 		}
@@ -35,10 +35,10 @@ exports.getSpreaded = function(id, callback){
   var spread = new Array();
   //handle user callback
   mongooseServices.getUserById(id, function(user){
-    var notesCount = user[0].spreaded.length;
-    for(var i=0; i<user[0].spreaded.length; i++){
-      mongooseServices.getNoteById(user[0].spreaded[i], function(note){
-        spread.push(note[0]);
+    var notesCount = user.spreaded.length;
+    for(var i=0; i<user.spreaded.length; i++){
+      mongooseServices.getNoteById(user.spreaded[i], function(note){
+        spread.push(note);
         if (spread.length === notesCount) callback(spread);
       });
     }
@@ -52,7 +52,7 @@ exports.getHistory = function(id, callback){
     var notesCount = user.history.length;
     for(var i=0; i<user.history.length; i++){
       mongooseServices.getNoteById(user.history[i], function(note){
-        hist.push(note[0]);
+        hist.push(note);
         if (hist.length === notesCount) callback(hist);
       });
     }
