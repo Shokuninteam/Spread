@@ -13,6 +13,9 @@ exports.getUser = function(req, res){
 
 exports.createUser = function(req, res){
  if(req.body == null) res.status(400).end("Syntax error");
+ else if(!req.body.nickname || !req.body.mail || !req.body.pwd || !req.body.avatar || !req.body.x || !req.body.y){
+  res.status(400).end("Missing field");
+ }
  else{
   var user = {
     nickname : req.body.nickname,
@@ -33,7 +36,7 @@ exports.createUser = function(req, res){
       res.status(code).end("Conflict : Unable to add User");
   });
  }
- 
+
 };
 
 exports.modifyUser = function(req, res){
@@ -60,6 +63,7 @@ exports.modifyUser = function(req, res){
 };
 
 exports.deleteUser = function(req, res){
+  if(!req.params.id) res.status(400).end("Syntax error");
   userServices.deleteUser(req.params.id, function(code){
     if(code == 204)
      res.status(code).end("User deleted");

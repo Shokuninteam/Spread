@@ -22,20 +22,18 @@ if ('development' == app.get('env')) {
   app.use(errorhandler());
 }
 
-//API : user
-app.get('/users/:id', user.getUser); // V0 ok
-app.post('/users', user.createUser); // V0 ok
-app.put('/users/:id', user.modifyUser); //V0 ok
-app.delete('/users/:id', user.deleteUser); // V0 ok
-app.post('/users/:id/positions', user.addPosition); // V0 ok
-app.get('/users/:id/notes/favoris', note.getFavs); // V0 ok
-app.post('/users/:id/notes/favoris', note.addFav); // V0 ok
-app.get('/users/:id/notes/history', note.gethistory); // V0 ok
-app.post('/users/:id/notes/spreaded', note.addSpreaded); // V0 ok
-app.get('/users/:id/notes/spreaded', note.getSpreaded); // v0 ok
-//API : note
-app.get('/notes/:id', note.getNote); // V0 ok
-app.post('/notes', note.createNote); // V0 ok
+app.get('/users/:id', user.getUser);
+app.post('/users', user.createUser);
+app.put('/users/:id', user.modifyUser);
+app.delete('/users/:id', user.deleteUser);
+app.post('/users/:id/positions', user.addPosition);
+app.get('/users/:id/notes/favoris', note.getFavs);
+app.post('/users/:id/notes/favoris', note.addFav);
+app.get('/users/:id/notes/history', note.gethistory);
+app.post('/users/:id/notes/spreaded', note.addSpreaded);
+app.get('/users/:id/notes/spreaded', note.getSpreaded);
+app.get('/notes/:id', note.getNote);
+app.post('/notes', note.createNote);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Port ' + app.get('port'));
