@@ -29,10 +29,12 @@ exports.createUser = function(req, res){
   }
 
   userServices.createUser(user, function(code, id){
-    if(code == 201)
-      res.setHeader("url", req.url + "/" + id);
+    if(code == 201){
+      res.setHeader("url", req.url);
+      res.setHeader("id", id);
       res.status(code).end("User added");
-    if(code == 409)
+    }
+    else if(code == 409)
       res.status(code).end("Conflict : Unable to add User");
   });
  }

@@ -3,8 +3,9 @@ var expect = require('expect.js')
 
 describe('Spread Express server-side : Node REST API', function(){
   var id;
+  var current = {};
 
-  it('sucessfully create a user', function(done){
+  it('should create a user', function(done){
     superagent.post('http://localhost:3030/users')
     .send({
       nickname: 'John',
@@ -15,69 +16,36 @@ describe('Spread Express server-side : Node REST API', function(){
       y : '23.4298429'
     })
     .end(function(e, res){
+      expect(res.header.id).not.to.be.null;
       expect(res.status).to.be.equal(201);
+      current.id = res.header.id;
       done();
     })
   })
 
-  /*it('retrieves an object', function(done){
-    superagent.get('http://localhost:3000/collections/test/'+id)
+  it('shouldn\'t creat a user with no password', function(done){
+    superagent.post('http://localhost:3030/users')
+    .send({
+      nickname: 'John',
+      mail: 'john@test.com',
+      avatar : '78FE6ZF8ZEfezfez00',
+      x : '34.9437432',
+      y : '23.4298429'
+    })
     .end(function(e, res){
-      // console.log(res.body)
-      expect(e).to.eql(null)
-      expect(typeof res.body).to.eql('object')
-      expect(res.body._id.length).to.eql(24)
-      expect(res.body._id).to.eql(id)
-      done()
+      expect(res.status).to.be.equal(400);
+      done();
     })
   })
 
-  it('retrieves a collection', function(done){
-    superagent.get('http://localhost:3000/collections/test')
+  it('shouldn\'t creat an empty user', function(done){
+    superagent.post('http://localhost:3030/users')
+    .send({})
     .end(function(e, res){
-      // console.log(res.body)
-      expect(e).to.eql(null)
-      expect(res.body.length).to.be.above(0)
-      expect(res.body.map(function (item){return item._id})).to.contain(id)
-      done()
+      expect(res.status).to.be.equal(400);
+      done();
     })
   })
 
-  it('updates an object', function(done){
-    superagent.put('http://localhost:3000/collections/test/'+id)
-    .send({name: 'Peter'
-    , email: 'peter@yahoo.com'})
-    .end(function(e, res){
-      // console.log(res.body)
-      expect(e).to.eql(null)
-      expect(typeof res.body).to.eql('object')
-      expect(res.body.msg).to.eql('success')
-      done()
-    })
-  })
 
-  it('checks an updated object', function(done){
-    superagent.get('http://localhost:3000/collections/test/'+id)
-    .end(function(e, res){
-      // console.log(res.body)
-      expect(e).to.eql(null)
-      expect(typeof res.body).to.eql('object')
-      expect(res.body._id.length).to.eql(24)
-      expect(res.body._id).to.eql(id)
-      expect(res.body.name).to.eql('Peter')
-      done()
-    })
-  })
-
-  it('removes an object', function(done){
-    superagent.del('http://localhost:3000/collections/test/'+id)
-    .end(function(e, res){
-      // console.log(res.body)
-      expect(e).to.eql(null)
-      expect(typeof res.body).to.eql('object')
-      expect(res.body.msg).to.eql('success')
-      done()
-    })
-  })
-*/
 })
