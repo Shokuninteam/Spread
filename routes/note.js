@@ -4,12 +4,23 @@ var noteServices = require('../modules/services/noteServices');
 
 exports.getNote = function(req, res){
   noteServices.getNoteById(req.params.id, function(note){
-    res.json(note);
+    if(note)
+     res.json(note);
+    else
+      res.status(404).end("Note not avalaible");
   });
 };
 
 exports.createNote = function(req, res){
-  var note = {
+  if(req.body == null) res.status(400).end("Syntax error");
+  else if(!req.body.content || !req.body.tags || !req.body.user ){
+  res.status(400).end("Missing field");
+  }else{
+    userServices.getUserById(req.body.user, function(user){
+      if(!user)
+        res.status(400).end("User unknown :  unable to create a note");
+    });
+    var note = {
     user : req.body.user,
     content : req.body.content,
     tags : req.body.tags
@@ -23,6 +34,7 @@ exports.createNote = function(req, res){
     else if(code == 409)
       res.status(code).end("Conflict : Unable to add Note");
   });
+  }
 };
 
 exports.addFav = function(req, res){
