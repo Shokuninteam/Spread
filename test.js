@@ -72,7 +72,17 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
       expect(res.status).to.be.equal(201);
-      current.userId = res.header.noteId;
+      current.noteId = res.header.id;
+      done();
+    })
+  })
+
+  it('should get the previously created note', function(done){
+    console.log(current.noteId);
+    superagent.get('http://localhost:3030/notes/' + current.noteId)
+    .send()
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
       done();
     })
   })
