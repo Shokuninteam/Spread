@@ -183,7 +183,7 @@ exports.createNote = function(note, callback){
     instance.save(function (err, note, affected) {
       if (err) {
         console.log(err);
-        callback(500);
+        callback(409);
       }
       else {
         if(affected == 1){
@@ -191,7 +191,7 @@ exports.createNote = function(note, callback){
             callback(201, note.id);
           });
         }
-        else callback(500);
+        else callback(409);
       }
    // });
   });
@@ -203,16 +203,16 @@ exports.addFav = function(id, noteId, callback){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findById(id, function(err, instance){
-      if(err) callback(204);
+      if(err) callback(404);
       else{
         console.log(instance);
         instance.favs.push(noteId);
         instance.save(function (err, instance, affected) {
-          if (err) callback(204);
+          if (err) callback(404);
           else {
             console.log(instance);
             if(affected == 1) callback(200);
-            else callback(204);
+            else callback(404);
           }
         });
       }
@@ -226,16 +226,16 @@ exports.addSpreaded = function(id, noteId, callback){
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findById(id, function(err, instance){
-      if(err) callback(204);
+      if(err) callback(404);
       else{
         console.log(instance);
         instance.spreaded.push(noteId);
         instance.save(function (err, instance, affected) {
-          if (err) callback(204);
+          if (err) callback(404);
           else {
             console.log(instance);
             if(affected == 1) callback(200);
-            else callback(204);
+            else callback(404);
           }
         });
       }
