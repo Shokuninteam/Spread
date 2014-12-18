@@ -18,7 +18,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
       expect(res.status).to.be.equal(201);
-      current.id = res.header.id;
+      current.userId = res.header.id;
       done();
     })
   })
@@ -47,5 +47,19 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
+  it('should creat a note assigned to the previously updated user', function(done){
+    superagent.post('http://localhost:3030/notes')
+    .send({
+        user : current.userId,
+        content : "My fictive note, testing my app",
+        tags : "tag1 tag2"
+    })
+    .end(function(e, res){
+      expect(res.header.id).not.to.be.null;
+      expect(res.status).to.be.equal(201);
+      current.userId = res.header.noteId;
+      done();
+    })
+  })
 
 })

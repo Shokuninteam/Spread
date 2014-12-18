@@ -14,8 +14,14 @@ exports.createNote = function(req, res){
     content : req.body.content,
     tags : req.body.tags
   }
-  noteServices.createNote(note, function(code){
-    res.status(code).end();
+  noteServices.createNote(note, function(code, id){
+    if(code == 201){
+      res.setHeader("url", req.url);
+      res.setHeader("id", id);
+      res.status(code).end("Note added");
+    }
+    else if(code == 409)
+      res.status(code).end("Conflict : Unable to add Note");
   });
 };
 

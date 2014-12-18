@@ -212,7 +212,7 @@ exports.createNote = function(note, callback){
       else {
         if(affected == 1){
           innerFunction.addHistory(note.user, note.id);
-          callback(201);
+          callback(201, note.id);
         }
         else callback(500);
       }
