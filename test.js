@@ -3,9 +3,11 @@ var expect = require('expect.js')
 
 describe('Spread Express server-side : Node REST API', function(){
   var id;
-  var current = {};
+  var current = {
+    noteIds : []
+  };
 
-  it('should create a user', function(done){
+  it('it should create a user', function(done){
     superagent.post('http://localhost:3030/users')
     .send({
       nickname: 'John',
@@ -23,7 +25,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('shouldn\'t creat a user with no password', function(done){
+  it('it shouldn\'t creat a user with no password', function(done){
     superagent.post('http://localhost:3030/users')
     .send({
       nickname: 'John',
@@ -38,7 +40,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('shouldn\'t creat an empty user', function(done){
+  it('it shouldn\'t creat an empty user', function(done){
     superagent.post('http://localhost:3030/users')
     .send({})
     .end(function(e, res){
@@ -47,7 +49,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('should get precisely the created user', function(done){
+  it('it should get precisely the created user', function(done){
     superagent.get('http://localhost:3030/users/' + current.userId)
     .send()
     .end(function(e, res){
@@ -62,7 +64,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('should create a note assigned to the previously updated user', function(done){
+  it('it should create a note assigned to the previously updated user', function(done){
     superagent.post('http://localhost:3030/notes')
     .send({
         user : current.userId,
@@ -72,12 +74,12 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
       expect(res.status).to.be.equal(201);
-      current.noteId = res.header.id;
+      current.noteIds.push(res.header.id);
       done();
     })
   })
 
-  it('should create a second note assigned to the same user', function(done){
+  it('it should create a second note assigned to the same user', function(done){
     superagent.post('http://localhost:3030/notes')
     .send({
       user : current.userId,
@@ -87,12 +89,13 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
       expect(res.status).to.be.equal(201);
+      current.noteIds.push(res.header.id);
       done();
     })
   })
 
-  it('should get the first note created', function(done){
-    superagent.get('http://localhost:3030/notes/' + current.noteId)
+  it('it should get the first note created', function(done){
+    superagent.get('http://localhost:3030/notes/' + current.noteIds[0])
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -100,12 +103,23 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('should retrieve the 2 notes as part of the user\'s history', function(done){
+  it('it should retrieve the 2 notes as part of the user\'s history', function(done){
     superagent.get('http://localhost:3030/users/' + current.userId + '/notes/history')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
       expect(res.body.length).to.be.equal(2);
+      done();
+    })
+  })
+
+  it('it should add the first note as spreaded by the user', function(done){
+    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    .send({
+      noteId : current.noteIds[0]
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);      
       done();
     })
   })

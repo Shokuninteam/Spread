@@ -220,26 +220,25 @@ exports.addFav = function(id, noteId, callback){
   });
 }
 
-exports.addSpreaded = function(id, noteId, callback){
+exports.addSpreaded = function(id, noteId, callback){;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function(){
-    var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.findById(id, function(err, instance){
-      if(err) callback(404);
-      else{
-        console.log(instance);
-        instance.spreaded.push(noteId);
-        instance.save(function (err, instance, affected) {
-          if (err) callback(404);
-          else {
-            console.log(instance);
-            if(affected == 1) callback(200);
-            else callback(404);
-          }
-        });
-      }
-    });
+  var UserModel = mongoose.model('User', schemas.userSchema);
+
+  UserModel.findById(id, function(err, instance){
+    if(err) callback(404);
+    else{
+      console.log(instance);
+      instance.spreaded.push(noteId);
+      instance.save(function (err, instance, affected) {
+        if (err) callback(404);
+        else {
+          console.log(instance);
+          if(affected == 1) callback(200);
+          else callback(404);
+        }
+      });
+    }
   });
 }
 
