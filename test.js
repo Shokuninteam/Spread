@@ -182,4 +182,16 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
+
+  it('it should add a new position for the user', function(done){
+    superagent.post('http://localhost:3030/users/' + current.userId + '/positions')
+    .send({
+      x : 34.02832,
+      y : 102.3043
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(201);
+      done();
+    })
+  })
 })

@@ -83,7 +83,7 @@ exports.addPosition = function(req, res){
       y : req.body.y
     }
     userServices.addPosition(user, function(code){
-      if(code == 200)
+      if(code == 201)
         res.status(code).end("Position added");
       if(code == 409)
         res.status(code).end("Conflict : Unable to add user");

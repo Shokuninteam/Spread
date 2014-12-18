@@ -172,28 +172,27 @@ exports.createNote = function(note, callback){
 
   db.on('error', console.error.bind(console, 'connection error:'));
 
-    var NoteModel = mongoose.model('Note', schemas.noteSchema);
+  var NoteModel = mongoose.model('Note', schemas.noteSchema);
 
-    var instance = new NoteModel();
+  var instance = new NoteModel();
 
-    instance.user = note.user;
-    instance.content = note.content;
-    instance.tags = note.tags;
+  instance.user = note.user;
+  instance.content = note.content;
+  instance.tags = note.tags;
 
-    instance.save(function (err, note, affected) {
-      if (err) {
-        console.log(err);
-        callback(409);
+  instance.save(function (err, note, affected) {
+    if (err) {
+      console.log(err);
+      callback(409);
+    }
+    else {
+      if(affected == 1){
+        innerFunction.addHistory(note.user, note.id, function(){
+          callback(201, note.id);
+        });
       }
-      else {
-        if(affected == 1){
-          innerFunction.addHistory(note.user, note.id, function(){
-            callback(201, note.id);
-          });
-        }
-        else callback(409);
-      }
-   // });
+      else callback(409);
+    }
   });
 }
 
@@ -256,7 +255,9 @@ exports.addPosition = function(user, callback){
       instance.save(function (err, instance, affected) {
         if (err) callback(409);
         else {
-          if(affected == 1) callback(200);
+          if(affected == 1) {
+            callback(201);
+          }
           else callback(409);
         }
       });
