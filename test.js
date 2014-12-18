@@ -77,8 +77,21 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('should get the previously created note', function(done){
-    console.log(current.noteId);
+  it('should create a second note assigned to the same user', function(done){
+    superagent.post('http://localhost:3030/notes')
+    .send({
+      user : current.userId,
+      content : "My fictive note, testing my app",
+      tags : "tag1 tag2"
+    })
+    .end(function(e, res){
+      expect(res.header.id).not.to.be.null;
+      expect(res.status).to.be.equal(201);
+      done();
+    })
+  })
+
+  it('should get the first note created', function(done){
     superagent.get('http://localhost:3030/notes/' + current.noteId)
     .send()
     .end(function(e, res){
@@ -86,5 +99,15 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-
+/*
+  it('should retrieve the 2 notes as part of the user\'s history', function(done){
+    superagent.get('http://localhost:3030/notes/' + current.userId + 'notes/history')
+    .send()
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      expect(res.body.length).to.be.equal(2);
+      done();
+    })
+  })
+*/
 })

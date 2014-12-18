@@ -36,7 +36,7 @@ var schemas = {
 }
 
 var innerFunction = {
-  addHistory : function(idUser, idNote){
+  addHistory : function(idUser, idNote, callback){
     mongoose.connect('mongodb://127.0.0.1:27017/Spread');
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
@@ -48,7 +48,11 @@ var innerFunction = {
           instance.history.push(idNote);
           instance.save(function (err, instance, affected) {
             mongoose.connection.close();
+            callback();
           });
+        } else {
+          mongoose.connection.close();
+          callback();
         }
       });
     });
@@ -213,8 +217,9 @@ exports.createNote = function(note, callback){
       }
       else {
         if(affected == 1){
-          innerFunction.addHistory(note.user, note.id);
-          callback(201, note.id);
+          innerFunction.addHistory(note.user, note.id, function(){
+            callback(201, note.id);
+          });
         }
         else callback(500);
       }
