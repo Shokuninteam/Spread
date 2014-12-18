@@ -99,9 +99,9 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-/*
+
   it('should retrieve the 2 notes as part of the user\'s history', function(done){
-    superagent.get('http://localhost:3030/notes/' + current.userId + 'notes/history')
+    superagent.get('http://localhost:3030/users/' + current.userId + '/notes/history')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -109,5 +109,5 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-*/
+
 })

@@ -183,7 +183,7 @@ exports.getNoteById = function(id, callback){
 
     var NoteModel = mongoose.model('Note', schemas.noteSchema);
 
-    NoteModel.find({ _id: id }, function(err, note){
+    NoteModel.findOne({ _id: id }, function(err, note){
       if(!err){
         mongoose.connection.close();
         callback(note);
