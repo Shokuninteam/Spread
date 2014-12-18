@@ -7,13 +7,18 @@
   },
   "dependencies": {
     "express": "*",
-    "mongoose" : "*",
-    "grunt" : "*",
-    "grunt-cli" : "*",
-    "statsd" : "*",
+    "mongoose": "*",
+    "grunt": "*",
+    "grunt-cli": "*",
+    "statsd": "*",
     "body-parser": "*",
-    "errorhandler":"*",
+    "errorhandler": "*",
     "morgan": "*",
-    "method-override" : "*"
+    "method-override": "*"
+  },
+  "devDependencies": {
+    "expect.js": "*",
+    "mocha": "*",
+    "superagent": "*"
   }
 }
