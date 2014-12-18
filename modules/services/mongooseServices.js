@@ -62,7 +62,7 @@ exports.getUserById = function(id, callback){
 
     var UserModel = mongoose.model('User', schemas.userSchema);
 
-    UserModel.find({ _id: id }, function(err, user){
+    UserModel.findOne({ _id: id }, function(err, user){
       if(!err){
         mongoose.connection.close();
         callback(user);

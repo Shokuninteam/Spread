@@ -47,6 +47,21 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
+  it('should get precisely the created user', function(done){
+    superagent.get('http://localhost:3030/users/' + current.userId)
+    .send()
+    .end(function(e, res){
+      expect(res.body.nickname).to.be.equal('John');
+      expect(res.body.mail).to.be.equal('john@test.com');
+      expect(res.body.avatar).to.be.equal('78FE6ZF8ZEfezfez00');
+      expect(res.body.pos[0].x).to.be.equal(34.9437432);
+      expect(res.body.pos[0].y).to.be.equal(23.4298429);
+      expect(res.body.pos[0].date).not.to.be.equal.null;
+      expect(res.status).to.be.equal(200);
+      done();
+    })
+  })
+
   it('should creat a note assigned to the previously updated user', function(done){
     superagent.post('http://localhost:3030/notes')
     .send({

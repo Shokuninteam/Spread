@@ -3,7 +3,7 @@ var noteServices = require('../modules/services/noteServices');
 
 exports.getUser = function(req, res){
   userServices.getUserById(req.params.id, function(user){
-    if(user.length > 0)
+    if(user)
   	 res.json(user);
     else{
       res.status(404).end("User not avalaible");
