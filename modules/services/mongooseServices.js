@@ -1,4 +1,8 @@
 var mongoose = require('mongoose');
+var uri = "mongodb://127.0.0.1:27017/Spread";
+
+mongoose.connect(uri);
+var db = mongoose.connection;
 
 var schemas = {
   userSchema : new mongoose.Schema({
@@ -37,54 +41,38 @@ var schemas = {
 
 var innerFunction = {
   addHistory : function(idUser, idNote, callback){
-    mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-    var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(){
       var UserModel = mongoose.model('User', schemas.userSchema);
 
       UserModel.findById(idUser, function(err, instance){
         if(!err){
           instance.history.push(idNote);
           instance.save(function (err, instance, affected) {
-            mongoose.connection.close();
             callback();
           });
         } else {
-          mongoose.connection.close();
           callback();
         }
-      });
     });
   }
 }
 // User services
 exports.getUserById = function(id, callback){
-
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function() {
-
     var UserModel = mongoose.model('User', schemas.userSchema);
 
     UserModel.findOne({ _id: id }, function(err, user){
       if(!err){
-        mongoose.connection.close();
         callback(user);
       }
       else
         return console.log(err);
     });
-  });
 }
 
 exports.createUser = function(user, callback){
 
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function() {
 
     var UserModel = mongoose.model('User', schemas.userSchema);
 
@@ -109,14 +97,10 @@ exports.createUser = function(user, callback){
         if(affected == 1) callback(201, user.id);
         else callback(409);
       }
-      mongoose.connection.close();
-    });
   });
 }
 
 exports.modifyUser = function(id, instance, callback){
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -138,7 +122,6 @@ exports.modifyUser = function(id, instance, callback){
               if(affected == 1) callback(200);
               else callback(404);
             }
-          mongoose.connection.close();
           });
         }
 
@@ -148,8 +131,6 @@ exports.modifyUser = function(id, instance, callback){
 }
 
 exports.deleteUser = function(id, callback){
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -166,7 +147,6 @@ exports.deleteUser = function(id, callback){
             if(affected == 1) callback(204);
             else callback(404);
           }
-          mongoose.connection.close();
         });
       }
     });
@@ -175,31 +155,22 @@ exports.deleteUser = function(id, callback){
 
 // Notes Services
 exports.getNoteById = function(id, callback){
-
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function() {
 
     var NoteModel = mongoose.model('Note', schemas.noteSchema);
 
     NoteModel.findOne({ _id: id }, function(err, note){
-      mongoose.connection.close();
       if(!err){
         callback(note);
       }
       else
         return console.log(err);
-    });
   });
 }
 
 exports.createNote = function(note, callback){
 
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function() {
 
     var NoteModel = mongoose.model('Note', schemas.noteSchema);
 
@@ -210,7 +181,6 @@ exports.createNote = function(note, callback){
     instance.tags = note.tags;
 
     instance.save(function (err, note, affected) {
-      mongoose.connection.close();
       if (err) {
         console.log(err);
         callback(500);
@@ -223,13 +193,11 @@ exports.createNote = function(note, callback){
         }
         else callback(500);
       }
-    });
+   // });
   });
 }
 
 exports.addFav = function(id, noteId, callback){
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -246,7 +214,6 @@ exports.addFav = function(id, noteId, callback){
             if(affected == 1) callback(200);
             else callback(204);
           }
-          mongoose.connection.close();
         });
       }
     });
@@ -254,8 +221,6 @@ exports.addFav = function(id, noteId, callback){
 }
 
 exports.addSpreaded = function(id, noteId, callback){
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -272,7 +237,6 @@ exports.addSpreaded = function(id, noteId, callback){
             if(affected == 1) callback(200);
             else callback(204);
           }
-          mongoose.connection.close();
         });
       }
     });
@@ -280,8 +244,6 @@ exports.addSpreaded = function(id, noteId, callback){
 }
 
 exports.addPosition = function(user, callback){
-  mongoose.connect('mongodb://127.0.0.1:27017/Spread');
-  var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -301,7 +263,6 @@ exports.addPosition = function(user, callback){
             if(affected == 1) callback(200);
             else callback(409);
           }
-          mongoose.connection.close();
         });
       }
     });
