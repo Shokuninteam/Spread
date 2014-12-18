@@ -44,10 +44,12 @@ var innerFunction = {
       var UserModel = mongoose.model('User', schemas.userSchema);
 
       UserModel.findById(idUser, function(err, instance){
+        if(!err){
           instance.history.push(idNote);
           instance.save(function (err, instance, affected) {
             mongoose.connection.close();
           });
+        }
       });
     });
   }
