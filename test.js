@@ -137,8 +137,42 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should retrieve the 2 notes as part of the user\'s history', function(done){
+  it('it should retrieve the 2 notes as part of the user\'s spreaded', function(done){
     superagent.get('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    .send()
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      expect(res.body.length).to.be.equal(2);
+      expect(res.body[0]._id).to.be.equal(current.noteIds[0]);
+      expect(res.body[1]._id).to.be.equal(current.noteIds[1]);
+      done();
+    })
+  })
+
+  it('it should add the first note as favored by the user', function(done){
+    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/favoris')
+    .send({
+      noteId : current.noteIds[0]
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      done();
+    })
+  })
+
+  it('it should add the second note as favored by the user', function(done){
+    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/favoris')
+    .send({
+      noteId : current.noteIds[1]
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      done();
+    })
+  })
+
+  it('it should retrieve the 2 notes as part of the user\'s favored', function(done){
+    superagent.get('http://localhost:3030/users/' + current.userId + '/notes/favoris')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
