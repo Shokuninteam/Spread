@@ -220,12 +220,37 @@ exports.addSpreaded = function(id, noteId, callback){;
   db.on('error', console.error.bind(console, 'connection error:'));
 
   var UserModel = mongoose.model('User', schemas.userSchema);
+  var NoteModel = mongoose.model('Note', schemas.noteSchema);
 
   UserModel.findById(id, function(err, instance){
     if(err) callback(404);
     else{
       console.log(instance);
       instance.spreaded.push(noteId);
+      NoteModel.findById(noteId, function (err, note){
+        if(err) callback(404);
+        else{
+            console.log(note);
+            var spread = {
+              user : id,
+              date : new Date(),
+              answer : true,
+              pos : {
+                x : instance.pos[0].x,
+                y : instance.pos[0].y
+              }
+            }
+            note.spread.push(spread);
+            note.save(function (err,note, affected){
+              if (err) callback(404);
+              else {
+                //console.log("Test note :\n" + note);
+                if(affected == 1) callback(200);
+                else callback(404);
+              }
+            });
+        }
+      });
       instance.save(function (err, instance, affected) {
         if (err) callback(404);
         else {
