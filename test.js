@@ -94,6 +94,21 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
+  it('it should create a third note assigned to the same user', function(done){
+    superagent.post('http://localhost:3030/notes')
+    .send({
+      user : current.userId,
+      content : "My fictive Killing note, testing my app",
+      tags : "tag1 tag2"
+    })
+    .end(function(e, res){
+      expect(res.header.id).not.to.be.null;
+      expect(res.status).to.be.equal(201);
+      current.noteIds.push(res.header.id);
+      done();
+    })
+  })
+
   it('it should get the first note created', function(done){
     superagent.get('http://localhost:3030/notes/' + current.noteIds[0])
     .send()
@@ -108,7 +123,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
-      expect(res.body.length).to.be.equal(2);
+      expect(res.body.length).to.be.equal(3);
       expect(res.body[0]._id).to.be.equal(current.noteIds[0]);
       expect(res.body[1]._id).to.be.equal(current.noteIds[1]);
       done();
@@ -145,6 +160,17 @@ describe('Spread Express server-side : Node REST API', function(){
       expect(res.body.length).to.be.equal(2);
       expect(res.body[0]._id).to.be.equal(current.noteIds[0]);
       expect(res.body[1]._id).to.be.equal(current.noteIds[1]);
+      done();
+    })
+  })
+
+  it('it should add the third note as killed by the user', function(done){
+    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/kill')
+    .send({
+      noteId : current.noteIds[2]
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
       done();
     })
   })

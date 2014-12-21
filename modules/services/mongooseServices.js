@@ -241,6 +241,7 @@ exports.killNote = function(id, noteId, callback){
             note.save(function (err,note, affected){
               if (err) callback(404);
               else {
+                console.log("Note killed : " + note);
                 if(affected == 1) callback(200);
                 else callback(404);
               }
