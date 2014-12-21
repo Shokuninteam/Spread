@@ -39,31 +39,46 @@ exports.createNote = function(req, res){
 
 exports.addFav = function(req, res){
   noteServices.addFav(req.params.id, req.body.noteId, function(code){
-    res.status(code).end();
+    if(code == 200)
+      res.status(code).end("Note added to favoris");
+    else
+      res.status(code).end("Unable to add note to favoris");
   });
 };
 
 exports.addSpreaded = function(req, res){
   noteServices.addSpreaded(req.params.id, req.body.noteId, function(code){
-    res.status(code).end();
+    if(code == 200)
+      res.status(code).end("Note spreaded");
+    else
+      res.status(code).end("Unable to Spread the note");
   });
 };
 
 exports.getFavs = function(req, res){
   noteServices.getFavs(req.params.id, function(favs){
-    res.json(favs);
+    if(favs)
+      res.json(favs);
+    else
+      res.status(404).end("Unable to get favoris notes");
   });
 };
 
 exports.gethistory = function(req, res){
   noteServices.getHistory(req.params.id, function(history){
-    res.json(history);
+    if(history)
+      res.json(history);
+    else
+      res.status(404).end("Unable to get history notes");
   });
 };
 
 exports.getSpreaded = function(req, res){
   noteServices.getSpreaded(req.params.id, function(spreaded){
-    res.json(spreaded);
+    if(spreaded)
+     res.json(spreaded);
+    else
+      res.status(404).end("Unable to get spreaded notes")
   });
 };
 
