@@ -55,6 +55,15 @@ exports.addSpreaded = function(req, res){
   });
 };
 
+exports.killNote = function(req, res){
+  noteServices.killNote(req.params.id, req.body.noteId, function(code){
+    if(code == 200)
+      res.status(code).end("Note killed");
+    else
+      res.status(code).end("Unable to Kill the note");
+  });
+};
+
 exports.getFavs = function(req, res){
   noteServices.getFavs(req.params.id, function(favs){
     if(favs)
