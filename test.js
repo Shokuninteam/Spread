@@ -8,7 +8,7 @@ describe('Spread Express server-side : Node REST API', function(){
   };
 
   it('it should create a user', function(done){
-    superagent.post('http://localhost:3030/users')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users')
     .send({
       nickname: 'John',
       mail: 'john@test.com',
@@ -26,7 +26,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it shouldn\'t creat a user with no password', function(done){
-    superagent.post('http://localhost:3030/users')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users')
     .send({
       nickname: 'John',
       mail: 'john@test.com',
@@ -41,7 +41,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it shouldn\'t creat an empty user', function(done){
-    superagent.post('http://localhost:3030/users')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users')
     .send({})
     .end(function(e, res){
       expect(res.status).to.be.equal(400);
@@ -50,7 +50,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should get precisely the created user', function(done){
-    superagent.get('http://localhost:3030/users/' + current.userId)
+    superagent.get('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId)
     .send()
     .end(function(e, res){
       expect(res.body.nickname).to.be.equal('John');
@@ -65,7 +65,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should create a note assigned to the previously updated user', function(done){
-    superagent.post('http://localhost:3030/notes')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/notes')
     .send({
         user : current.userId,
         content : "My fictive note, testing my app",
@@ -80,7 +80,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should create a second note assigned to the same user', function(done){
-    superagent.post('http://localhost:3030/notes')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/notes')
     .send({
       user : current.userId,
       content : "My fictive note, testing my app",
@@ -95,7 +95,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should create a third note assigned to the same user', function(done){
-    superagent.post('http://localhost:3030/notes')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/notes')
     .send({
       user : current.userId,
       content : "My fictive Killing note, testing my app",
@@ -110,7 +110,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should get the first note created', function(done){
-    superagent.get('http://localhost:3030/notes/' + current.noteIds[0])
+    superagent.get('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/notes/' + current.noteIds[0])
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -119,7 +119,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should retrieve the 2 notes as part of the user\'s history', function(done){
-    superagent.get('http://localhost:3030/users/' + current.userId + '/notes/history')
+    superagent.get('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/history')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -131,7 +131,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the first note as spreaded by the user', function(done){
-    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/spreaded')
     .send({
       noteId : current.noteIds[0]
     })
@@ -142,7 +142,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the second note as spreaded by the user', function(done){
-    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/spreaded')
     .send({
       noteId : current.noteIds[1]
     })
@@ -153,7 +153,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should retrieve the 2 notes as part of the user\'s spreaded', function(done){
-    superagent.get('http://localhost:3030/users/' + current.userId + '/notes/spreaded')
+    superagent.get('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/spreaded')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -165,7 +165,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the third note as killed by the user', function(done){
-    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/kill')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/kill')
     .send({
       noteId : current.noteIds[2]
     })
@@ -176,7 +176,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the first note as favored by the user', function(done){
-    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/favoris')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/favoris')
     .send({
       noteId : current.noteIds[0]
     })
@@ -187,7 +187,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the second note as favored by the user', function(done){
-    superagent.post('http://localhost:3030/users/' + current.userId + '/notes/favoris')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/favoris')
     .send({
       noteId : current.noteIds[1]
     })
@@ -198,7 +198,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should retrieve the 2 notes as part of the user\'s favored', function(done){
-    superagent.get('http://localhost:3030/users/' + current.userId + '/notes/favoris')
+    superagent.get('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/notes/favoris')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -210,7 +210,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add a new position for the user', function(done){
-    superagent.post('http://localhost:3030/users/' + current.userId + '/positions')
+    superagent.post('http://ec2-54-154-80-189.eu-west-1.compute.amazonaws.com/users/' + current.userId + '/positions')
     .send({
       x : 34.02832,
       y : 102.3043
