@@ -64,6 +64,10 @@ var innerFunction = {
     });
   },
 
+  /**
+  * Seek the 10 closest users that aren't in the current spreadTab
+  * Call the callback with those 10 users
+  */
   getTenClothestUsers : function(spreadTab, callback){
 
     db.on('error', console.error.bind(console, 'connection error:'));
@@ -85,7 +89,11 @@ var innerFunction = {
       });
   }
 }
-// User services
+
+
+/**
+* Seek the user with the given id
+*/
 exports.getUserById = function(id, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -99,6 +107,9 @@ exports.getUserById = function(id, callback){
     });
 }
 
+/**
+* Create a new user
+*/
 exports.createUser = function(user, callback){
 
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -134,6 +145,9 @@ exports.createUser = function(user, callback){
   });
 }
 
+/**
+* Modify a user
+*/
 exports.modifyUser = function(id, instance, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
@@ -164,6 +178,9 @@ exports.modifyUser = function(id, instance, callback){
   });
 }
 
+/**
+* Delete a user
+*/
 exports.deleteUser = function(id, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function(){
@@ -185,7 +202,9 @@ exports.deleteUser = function(id, callback){
   });
 }
 
-// Notes Services
+/**
+* Get the note with the given ID
+*/
 exports.getNoteById = function(id, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -200,6 +219,12 @@ exports.getNoteById = function(id, callback){
   });
 }
 
+/**
+* Create a new note
+* Add this note as Spreaded by his maker
+* Spread this note to the 10 closest users
+* Add this note to the user's history
+*/
 exports.createNote = function(note, callback){
 
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -251,9 +276,11 @@ exports.createNote = function(note, callback){
       }
     });
   });
-
 }
 
+/**
+* Add the given note as a fav of the given user
+*/
 exports.addFav = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -274,43 +301,11 @@ exports.addFav = function(id, noteId, callback){
   });
 }
 
-/* exports.killNote = function(id, noteId, callback){
-  db.on('error', console.error.bind(console, 'connection error:'));
-
-  var UserModel = mongoose.model('User', schemas.userSchema);
-  var NoteModel = mongoose.model('Note', schemas.noteSchema);
-
-  UserModel.findById(id, function(err, instance){
-    if(err) callback(404);
-    else{
-      NoteModel.findById(noteId, function (err, note){
-        if(err) callback(404);
-        else{
-            var spread = {
-              user : id,
-              date : new Date(),
-              answer : false,
-              pos : {
-                x : instance.pos[0].x,
-                y : instance.pos[0].y
-              }
-            }
-            note.spread.push(spread);
-            note.save(function (err,note, affected){
-              if (err) callback(404);
-              else {
-                console.log("Note killed : " + note);
-                if(affected == 1) callback(200);
-                else callback(404);
-              }
-            });
-        }
-      });
-    }
-  });
-}
+/**
+* A user chose to spread a note
+* The note's spread for the given user is updated
+* The note is spreaded to the 10 closests users
 */
-
 exports.addSpreaded = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -372,6 +367,11 @@ exports.addSpreaded = function(id, noteId, callback){
   });
 }
 
+/**
+  * Change the position of a user
+  * Change the actual loc value
+  * Add to the history
+  */
 exports.addPosition = function(user, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -387,6 +387,7 @@ exports.addPosition = function(user, callback){
           coordinates: [ user.long, user.lat ]
         }
       }
+      instance.loc = pos;
       instance.pos.push(pos);
       instance.save(function (err, instance, affected) {
         if (err) callback(409);
