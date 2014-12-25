@@ -16,12 +16,12 @@ describe('Spread Express server-side : Node REST API', function(){
   it('it should create a user in Rueil-Mailmaison', function(done){
     superagent.post(url + '/users')
     .send({
-      nickname: 'John',
-      mail: 'john@test.com',
+      nickname: 'Frank',
+      mail: 'f.bassard@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE6ZF8ZEfezfez00',
-      x : '34.9437432',
-      y : '23.4298429'
+      x : '48.860169',
+      y : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -59,11 +59,11 @@ describe('Spread Express server-side : Node REST API', function(){
     superagent.get(url + '/users/' + current.userId[0])
     .send()
     .end(function(e, res){
-      expect(res.body.nickname).to.be.equal('John');
-      expect(res.body.mail).to.be.equal('john@test.com');
+      expect(res.body.nickname).to.be.equal('Frank');
+      expect(res.body.mail).to.be.equal('f.bassard@gmail.com');
       expect(res.body.avatar).to.be.equal('78FE6ZF8ZEfezfez00');
-      expect(res.body.pos[0].x).to.be.equal(34.9437432);
-      expect(res.body.pos[0].y).to.be.equal(23.4298429);
+      expect(res.body.pos[0].x).to.be.equal(48.860169);
+      expect(res.body.pos[0].y).to.be.equal(2.186220);
       expect(res.body.pos[0].date).not.to.be.equal.null;
       expect(res.status).to.be.equal(200);
       done();
