@@ -64,7 +64,7 @@ var innerFunction = {
     });
   },
 
-  getTenClothestUsers : function(spreadTab, callback){
+  spreadToTenClothestUsers : function(spreadTab, callback){
 
     db.on('error', console.error.bind(console, 'connection error:'));
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -76,7 +76,7 @@ var innerFunction = {
       idTab.push(spreadTab[i].user);
     }
 
-    UserModel.find({ loc : { $near : { $geometry : { type : "Point" , coordinates : [long, lat] }}}, _id: { $nin: idTab }}, function(err, users){
+    UserModel.find({ loc : { $near : { $geometry : { type : "Point" , coordinates : [long, lat] }}}, _id: { $nin: idTab }}).limit(10).exec(function(err, users){
       if(!err){
         callback(users);
       }
@@ -323,7 +323,7 @@ exports.addSpreaded = function(id, noteId, callback){
               if (err) callback(404);
               else {
                 if(affected == 1){
-                  innerFunction.getTenClothestUsers(note.spread, function(users){
+                  innerFunction.spreadToTenClothestUsers(note.spread, function(users){
                     for(var i = 0; i<users.length; i++) console.log(users[i].nickname);
                   });
                   callback(200);
