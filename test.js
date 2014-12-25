@@ -361,7 +361,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should get precisely the created user', function(done){
+  it('it should get precisely the first user created', function(done){
     superagent.get(url + '/users/' + current.userId[0])
     .send()
     .end(function(e, res){
@@ -382,8 +382,8 @@ describe('Spread Express server-side : Node REST API', function(){
         user : current.userId[0],
         content : "My fictive note, testing my app",
         tags : "tag1 tag2",
-        x : 47.48264,
-        y : 82.29832
+        x : '48.860169',
+        y : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -399,8 +399,8 @@ describe('Spread Express server-side : Node REST API', function(){
       user : current.userId[0],
       content : "My fictive note, testing my app",
       tags : "tag1 tag2",
-      x : 47.48264,
-      y : 82.29832
+      x : '48.860169',
+      y : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -416,8 +416,8 @@ describe('Spread Express server-side : Node REST API', function(){
       user : current.userId[0],
       content : "My fictive Killing note, testing my app",
       tags : "tag1 tag2",
-      x : 47.48264,
-      y : 82.29832
+      x : '48.860169',
+      y : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -527,11 +527,11 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should add a new position for the user', function(done){
+  it('it should add a new position for the user : (Paris)', function(done){
     superagent.post(url + '/users/' + current.userId[0] + '/positions')
     .send({
-      x : 34.02832,
-      y : 102.3043
+      x : 48.856614,
+      y : 2.352222
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(201);
