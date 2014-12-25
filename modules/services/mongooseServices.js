@@ -64,7 +64,7 @@ var innerFunction = {
     });
   },
 
-  spreadToTenClothestUsers : function(spreadTab, callback){
+  getTenClothestUsers : function(spreadTab, callback){
 
     db.on('error', console.error.bind(console, 'connection error:'));
     var UserModel = mongoose.model('User', schemas.userSchema);
@@ -309,28 +309,41 @@ exports.addSpreaded = function(id, noteId, callback){
       NoteModel.findById(noteId, function (err, note){
         if(err) callback(404);
         else{
-            var spread = {
-              user : id,
-              date : new Date(),
-              answer : true,
-              loc : {
+          for(var i = 0; i<note.spread; i++){
+            if(note.spread[i].user == id && note.spread[i].answer == "none"){
+              note.spread[i].answer = "spread";
+              note.spread[i].loc = {
                 type: { type: "Point" },
                 coordinates: [ instance.loc.coordinates[0], instance.loc.coordinates[1] ]
               }
+              note.spread[i].date = new Date();
             }
-            note.spread.push(spread);
-            note.save(function (err,note, affected){
+          }
+
+          innerFunction.getTenClothestUsers(note.spread, function(users){
+
+            for(var i = 0; i<users.length; i++){
+              note.spread.push({
+                user : users[i].id,
+                date : new Date(),
+                loc : {
+                  type: { type: "Point" },
+                  coordinates: [ users[i].loc.coordinates[0], users[i].loc.coordinates[1]]
+                },
+                answer : "none"
+              });
+            }
+
+            note.save(function (err, note, affected){
               if (err) callback(404);
               else {
                 if(affected == 1){
-                  innerFunction.spreadToTenClothestUsers(note.spread, function(users){
-                    for(var i = 0; i<users.length; i++) console.log(users[i].nickname);
-                  });
                   callback(200);
                 }
                 else callback(404);
               }
             });
+          });
         }
       });
       instance.save(function (err, instance, affected) {
