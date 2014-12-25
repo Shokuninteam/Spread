@@ -337,7 +337,7 @@ exports.addSpreaded = function(id, noteId, callback){
                 user : users[i].id,
                 date : new Date(),
                 loc : {
-                  type: { type: "Point" },
+                  type: "Point",
                   coordinates: [ users[i].loc.coordinates[0], users[i].loc.coordinates[1]]
                 },
                 answer : "none"
