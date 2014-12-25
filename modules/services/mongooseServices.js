@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var tools = require('tools');
+var tools = require('./tools');
 var uri = "mongodb://127.0.0.1:27017/Spread";
 
 mongoose.connect(uri);
@@ -11,10 +11,16 @@ var schemas = {
     mail : String,
     pwd : String,
     avatar : String,
+    loc : {
+       type: { type: String },
+       coordinates : [ Number ]
+    },
     pos : [{
       date : Date,
-      x : Number,
-      y : Number
+      loc : {
+        type: { type: String },
+        coordinates: [ Number ]
+      }
     }],
     favs : [String],
     spreaded : [String],
@@ -31,9 +37,9 @@ var schemas = {
     spread : [{
       user : String,
       date : Date,
-      pos : {
-        x : Number,
-        y : Number
+      loc : {
+        type: { type: String },
+        coordinates: [ Number ]
       },
       answer : String
     }]
@@ -56,6 +62,10 @@ var innerFunction = {
           callback();
         }
     });
+  },
+
+  getTenClothestUsers : function(spreadTab, callback){
+
   }
 }
 // User services
@@ -80,22 +90,32 @@ exports.createUser = function(user, callback){
 
     var instance = new UserModel();
 
+    console.log(instance);
+
     instance.nickname = user.nickname;
     instance.mail = user.mail;
     instance.pwd = user.pwd;
     instance.avatar = user.avatar;
-    var pos = {
+    var loc = {
+      type: "Point",
+      coordinates : [
+        user.pos[0].x,
+        user.pos[0].y
+      ]
+    };
+    instance.loc = loc;
+    instance.pos.push({
       date : new Date(),
-      x : user.pos[0].x,
-      y : user.pos[0].y
-    }
-    instance.pos.push(pos);
+      loc : {
+        type : "Point",
+        coordinates : [user.pos[0].x, user.pos[0].y]
+      }
+    });
     instance.active = true;
 
     instance.save(function (err, user, affected) {
       if (err) callback(409);
       else {
-        console.log(user);
         if(affected == 1) callback(201, user.id);
         else callback(409);
       }
@@ -116,8 +136,8 @@ exports.modifyUser = function(id, instance, callback){
           if(instance.mail) user.mail = instance.mail;
           if(instance.pwd) user.pwd = instance.pwd;
           if(instance.avatar) user.avatar = instance.avatar;
-          if(instance.pos[0].x) user.pos[0].x = instance.pos[0].x;
-          if(instance.pos[0].y) user.pos[0].y = instance.pos[0].y;
+          if(instance.pos[0].x) user.loc.coordinates[0] = instance.pos[0].x;
+          if(instance.pos[0].y) user.loc.coordinates[0] = instance.pos[0].y;
           user.save(function (err, user, affected) {
             if (err) callback(404);
             else {
@@ -140,12 +160,10 @@ exports.deleteUser = function(id, callback){
     UserModel.findById(id, function(err, instance){
       if(err) callback(404);
       else{
-        console.log(instance);
         instance.active = false;
         instance.save(function (err, instance, affected) {
           if (err) callback(404);
           else {
-            console.log(instance);
             if(affected == 1) callback(204);
             else callback(404);
           }
@@ -184,9 +202,9 @@ exports.createNote = function(note, callback){
   instance.spread.push({
     user : note.user,
     date : new Date(),
-    pos : {
-      x : note.x,
-      y : note.y
+    loc : {
+      type: "Point",
+      coordinates: [ note.x, note.y ]
     },
     answer : "spread"
   });
@@ -227,7 +245,7 @@ exports.addFav = function(id, noteId, callback){
   });
 }
 
-exports.killNote = function(id, noteId, callback){
+/* exports.killNote = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
   var UserModel = mongoose.model('User', schemas.userSchema);
@@ -262,6 +280,7 @@ exports.killNote = function(id, noteId, callback){
     }
   });
 }
+*/
 
 exports.addSpreaded = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -272,12 +291,10 @@ exports.addSpreaded = function(id, noteId, callback){
   UserModel.findById(id, function(err, instance){
     if(err) callback(404);
     else{
-      console.log(instance);
       instance.spreaded.push(noteId);
       NoteModel.findById(noteId, function (err, note){
         if(err) callback(404);
         else{
-            console.log(note);
             var spread = {
               user : id,
               date : new Date(),
@@ -291,7 +308,6 @@ exports.addSpreaded = function(id, noteId, callback){
             note.save(function (err,note, affected){
               if (err) callback(404);
               else {
-                //console.log("Test note :\n" + note);
                 if(affected == 1) callback(200);
                 else callback(404);
               }
@@ -301,7 +317,6 @@ exports.addSpreaded = function(id, noteId, callback){
       instance.save(function (err, instance, affected) {
         if (err) callback(404);
         else {
-          console.log(instance);
           if(affected == 1) callback(200);
           else callback(404);
         }

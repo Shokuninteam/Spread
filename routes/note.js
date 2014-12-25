@@ -57,6 +57,7 @@ exports.addSpreaded = function(req, res){
   });
 };
 
+/*
 exports.killNote = function(req, res){
   noteServices.killNote(req.params.id, req.body.noteId, function(code){
     if(code == 200)
@@ -65,6 +66,7 @@ exports.killNote = function(req, res){
       res.status(code).end("Unable to Kill the note");
   });
 };
+*/
 
 exports.getFavs = function(req, res){
   noteServices.getFavs(req.params.id, function(favs){
