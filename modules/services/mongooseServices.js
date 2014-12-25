@@ -66,6 +66,24 @@ var innerFunction = {
 
   getTenClothestUsers : function(spreadTab, callback){
 
+    db.on('error', console.error.bind(console, 'connection error:'));
+    var UserModel = mongoose.model('User', schemas.userSchema);
+
+    var long = spreadTab[0].loc.coordinates[0];
+    var lat = spreadTab[0].loc.coordinates[1];
+    var idTab = [];
+    for(var i = 0; i < spreadTab.length; i++) {
+      idTab.push(spreadTab[i].user);
+    }
+
+    UserModel.find({ loc : { $near : { $geometry : { type : "Point" , coordinates : [long, lat] }}}, _id: { $nin: idTab }}, function(err, users){
+      if(!err){
+        callback(users);
+      }
+      else
+        return console.log(err);
+      });
+
   }
 }
 // User services
@@ -304,7 +322,12 @@ exports.addSpreaded = function(id, noteId, callback){
             note.save(function (err,note, affected){
               if (err) callback(404);
               else {
-                if(affected == 1) callback(200);
+                if(affected == 1){
+                  innerFunction.getTenClothestUsers(note.spread, function(users){
+                    for(var i = 0; i<users.length; i++) console.log(users[i].nickname);
+                  });
+                  callback(200);
+                }
                 else callback(404);
               }
             });
