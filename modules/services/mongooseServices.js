@@ -383,7 +383,7 @@ exports.addPosition = function(user, callback){
       var pos = {
         date : new Date(),
         loc : {
-          type: { type: "Point" },
+          type: "Point",
           coordinates: [ user.long, user.lat ]
         }
       }
