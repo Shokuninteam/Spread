@@ -69,7 +69,9 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
         user : current.userId,
         content : "My fictive note, testing my app",
-        tags : "tag1 tag2"
+        tags : "tag1 tag2",
+        x : 47.48264,
+        y : 82.29832
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -84,7 +86,9 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       user : current.userId,
       content : "My fictive note, testing my app",
-      tags : "tag1 tag2"
+      tags : "tag1 tag2",
+      x : 47.48264,
+      y : 82.29832
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;

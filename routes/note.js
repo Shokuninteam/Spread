@@ -13,7 +13,7 @@ exports.getNote = function(req, res){
 
 exports.createNote = function(req, res){
   if(req.body == null) res.status(400).end("Syntax error");
-  else if(!req.body.content || !req.body.tags || !req.body.user ){
+  else if(!req.body.content || !req.body.tags || !req.body.user || !req.body.x || !req.body.y ){
   res.status(400).end("Missing field");
   }else{
     userServices.getUserById(req.body.user, function(user){
@@ -23,7 +23,9 @@ exports.createNote = function(req, res){
     var note = {
     user : req.body.user,
     content : req.body.content,
-    tags : req.body.tags
+    tags : req.body.tags,
+    x : req.body.x,
+    y : req.body.y
   }
   noteServices.createNote(note, function(code, id){
     if(code == 201){

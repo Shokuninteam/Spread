@@ -37,6 +37,7 @@ var schemas = {
       answer : String
     }]
   })
+
 }
 
 var innerFunction = {
@@ -179,6 +180,15 @@ exports.createNote = function(note, callback){
   instance.user = note.user;
   instance.content = note.content;
   instance.tags = note.tags;
+  instance.spread.push({
+    user : note.user,
+    date : new Date(),
+    pos : {
+      x : note.x,
+      y : note.y
+    },
+    answer : "spread"
+  });
 
   instance.save(function (err, note, affected) {
     if (err) {
