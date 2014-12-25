@@ -323,7 +323,7 @@ exports.addSpreaded = function(id, noteId, callback){
             if(note.spread[i].user == id && note.spread[i].answer == "none"){
               note.spread[i].answer = "spread";
               note.spread[i].loc = {
-                type: { type: "Point" },
+                type: "Point",
                 coordinates: [ instance.loc.coordinates[0], instance.loc.coordinates[1] ]
               }
               note.spread[i].date = new Date();
