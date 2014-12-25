@@ -4,6 +4,7 @@ var expect = require('expect.js')
 describe('Spread Express server-side : Node REST API', function(){
   var id;
   var current = {
+    userId : [],
     noteIds : []
   };
   var urls = {
@@ -25,7 +26,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
       expect(res.status).to.be.equal(201);
-      current.userId = res.header.id;
+      current.userId[0] = res.header.id;
       done();
     })
   })
@@ -55,7 +56,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should get precisely the created user', function(done){
-    superagent.get(url + '/users/' + current.userId)
+    superagent.get(url + '/users/' + current.userId[0])
     .send()
     .end(function(e, res){
       expect(res.body.nickname).to.be.equal('John');
@@ -72,7 +73,7 @@ describe('Spread Express server-side : Node REST API', function(){
   it('it should create a note assigned to the previously updated user', function(done){
     superagent.post(url + '/notes')
     .send({
-        user : current.userId,
+        user : current.userId[0],
         content : "My fictive note, testing my app",
         tags : "tag1 tag2",
         x : 47.48264,
@@ -89,7 +90,7 @@ describe('Spread Express server-side : Node REST API', function(){
   it('it should create a second note assigned to the same user', function(done){
     superagent.post(url + '/notes')
     .send({
-      user : current.userId,
+      user : current.userId[0],
       content : "My fictive note, testing my app",
       tags : "tag1 tag2",
       x : 47.48264,
@@ -106,7 +107,7 @@ describe('Spread Express server-side : Node REST API', function(){
   it('it should create a third note assigned to the same user', function(done){
     superagent.post(url + '/notes')
     .send({
-      user : current.userId,
+      user : current.userId[0],
       content : "My fictive Killing note, testing my app",
       tags : "tag1 tag2",
       x : 47.48264,
@@ -130,7 +131,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should retrieve the 2 notes as part of the user\'s history', function(done){
-    superagent.get(url + '/users/' + current.userId + '/notes/history')
+    superagent.get(url + '/users/' + current.userId[0] + '/notes/history')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -142,7 +143,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the first note as spreaded by the user', function(done){
-    superagent.post(url + '/users/' + current.userId + '/notes/spreaded')
+    superagent.post(url + '/users/' + current.userId[0] + '/notes/spreaded')
     .send({
       noteId : current.noteIds[0]
     })
@@ -153,7 +154,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the second note as spreaded by the user', function(done){
-    superagent.post(url + '/users/' + current.userId + '/notes/spreaded')
+    superagent.post(url + '/users/' + current.userId[0] + '/notes/spreaded')
     .send({
       noteId : current.noteIds[1]
     })
@@ -164,7 +165,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should retrieve the 2 notes as part of the user\'s spreaded', function(done){
-    superagent.get(url + '/users/' + current.userId + '/notes/spreaded')
+    superagent.get(url + '/users/' + current.userId[0] + '/notes/spreaded')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -176,7 +177,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the third note as killed by the user', function(done){
-    superagent.post(url + '/users/' + current.userId + '/notes/kill')
+    superagent.post(url + '/users/' + current.userId[0] + '/notes/kill')
     .send({
       noteId : current.noteIds[2]
     })
@@ -187,7 +188,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the first note as favored by the user', function(done){
-    superagent.post(url + '/users/' + current.userId + '/notes/favoris')
+    superagent.post(url + '/users/' + current.userId[0] + '/notes/favoris')
     .send({
       noteId : current.noteIds[0]
     })
@@ -198,7 +199,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add the second note as favored by the user', function(done){
-    superagent.post(url + '/users/' + current.userId + '/notes/favoris')
+    superagent.post(url + '/users/' + current.userId[0] + '/notes/favoris')
     .send({
       noteId : current.noteIds[1]
     })
@@ -209,7 +210,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should retrieve the 2 notes as part of the user\'s favored', function(done){
-    superagent.get(url + '/users/' + current.userId + '/notes/favoris')
+    superagent.get(url + '/users/' + current.userId[0] + '/notes/favoris')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -221,7 +222,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should add a new position for the user', function(done){
-    superagent.post(url + '/users/' + current.userId + '/positions')
+    superagent.post(url + '/users/' + current.userId[0] + '/positions')
     .send({
       x : 34.02832,
       y : 102.3043
