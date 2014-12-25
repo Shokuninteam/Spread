@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var tools = require('tools');
 var uri = "mongodb://127.0.0.1:27017/Spread";
 
 mongoose.connect(uri);

@@ -139,15 +139,15 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should create an height user in La réunion', function(done){
+  it('it should create an height user in Sf', function(done){
     superagent.post(url + '/users')
     .send({
-      nickname: 'JulieFather',
-      mail: 'JulieFather@gmail.com',
+      nickname: 'KevinRose',
+      mail: 'KevinRose@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE94fezZEfedezez00',
-      x : '-21.100000',
-      y : '55.600000'
+      x : '37.774929',
+      y : '-122.419416'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
