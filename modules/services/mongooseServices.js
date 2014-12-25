@@ -254,7 +254,7 @@ exports.createNote = function(note, callback){
         user : users[i].id,
         date : new Date(),
         loc : {
-          type: { type: "Point" },
+          type: "Point",
           coordinates: [ users[i].loc.coordinates[0], users[i].loc.coordinates[1]]
         },
         answer : "none"
@@ -366,6 +366,48 @@ exports.addSpreaded = function(id, noteId, callback){
     }
   });
 }
+
+/**
+  * A user choose to discard a note
+  * Note's updated 
+  */
+exports.discardNote = function(id, noteId, callback){
+  db.on('error', console.error.bind(console, 'connection error:'));
+
+  var UserModel = mongoose.model('User', schemas.userSchema);
+  var NoteModel = mongoose.model('Note', schemas.noteSchema);
+
+  UserModel.findById(id, function(err, instance){
+    if(err) callback(404);
+    else{
+      instance.spreaded.push(noteId);
+      NoteModel.findById(noteId, function (err, note){
+        if(err) callback(404);
+        else{
+          console.log(note);
+          for(var i = 0; i<note.spread; i++){
+            if(note.spread[i].user == id && note.spread[i].answer == "none"){
+              note.spread[i].answer = "discard";
+              note.spread[i].loc = {
+                type: "Point",
+                coordinates: [ instance.loc.coordinates[0], instance.loc.coordinates[1] ]
+              }
+              note.spread[i].date = new Date();
+            }
+          }
+        }
+      });
+      instance.save(function (err, instance, affected) {
+        if (err) callback(404);
+        else {
+          if(affected == 1) callback(200);
+          else callback(404);
+        }
+      });
+    }
+  });
+}
+
 
 /**
   * Change the position of a user

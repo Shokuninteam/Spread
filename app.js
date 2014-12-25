@@ -31,7 +31,7 @@ app.get('/users/:id/notes/favoris', note.getFavs);
 app.post('/users/:id/notes/favoris', note.addFav);
 app.get('/users/:id/notes/history', note.gethistory);
 app.post('/users/:id/notes/spreaded', note.addSpreaded);
-//app.post('/users/:id/notes/kill', note.killNote);
+app.post('/users/:id/notes/kill', note.discardNote);
 app.get('/users/:id/notes/spreaded', note.getSpreaded);
 app.get('/notes/:id', note.getNote);
 app.post('/notes', note.createNote);

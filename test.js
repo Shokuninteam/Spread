@@ -482,7 +482,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-/*
+
   it('it should add the third note as killed by the user', function(done){
     superagent.post(url + '/users/' + current.userId[0] + '/notes/kill')
     .send({
@@ -493,7 +493,7 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-  */
+  
 
 
 

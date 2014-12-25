@@ -17,11 +17,11 @@ exports.addSpreaded = function(id, noteId, callback){
   mongooseServices.addSpreaded(id, noteId, callback);
 }
 
-/*
-exports.killNote = function(id, noteId, callback){
-  mongooseServices.killNote(id, noteId, callback);
+
+exports.discardNote = function(id, noteId, callback){
+  mongooseServices.discardNote(id, noteId, callback);
 }
-*/
+
 
 exports.getFavs = function(id, callback){
 	var favs = new Array();
