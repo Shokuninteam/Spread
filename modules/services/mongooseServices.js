@@ -90,25 +90,20 @@ exports.createUser = function(user, callback){
 
     var instance = new UserModel();
 
-    console.log(instance);
-
     instance.nickname = user.nickname;
     instance.mail = user.mail;
     instance.pwd = user.pwd;
     instance.avatar = user.avatar;
     var loc = {
       type: "Point",
-      coordinates : [
-        user.pos[0].x,
-        user.pos[0].y
-      ]
+      coordinates : [user.pos[0].long, user.pos[0].lat]
     };
     instance.loc = loc;
     instance.pos.push({
       date : new Date(),
       loc : {
         type : "Point",
-        coordinates : [user.pos[0].x, user.pos[0].y]
+        coordinates : [user.pos[0].long, user.pos[0].lat]
       }
     });
     instance.active = true;
@@ -136,8 +131,8 @@ exports.modifyUser = function(id, instance, callback){
           if(instance.mail) user.mail = instance.mail;
           if(instance.pwd) user.pwd = instance.pwd;
           if(instance.avatar) user.avatar = instance.avatar;
-          if(instance.pos[0].x) user.loc.coordinates[0] = instance.pos[0].x;
-          if(instance.pos[0].y) user.loc.coordinates[0] = instance.pos[0].y;
+          if(instance.pos[0].long) user.loc.coordinates[0] = instance.pos[0].long;
+          if(instance.pos[0].lat) user.loc.coordinates[1] = instance.pos[0].lat;
           user.save(function (err, user, affected) {
             if (err) callback(404);
             else {
@@ -199,12 +194,13 @@ exports.createNote = function(note, callback){
   instance.user = note.user;
   instance.content = note.content;
   instance.tags = note.tags;
+
   instance.spread.push({
     user : note.user,
     date : new Date(),
     loc : {
       type: "Point",
-      coordinates: [ note.x, note.y ]
+      coordinates: [ note.long, note.lat ]
     },
     answer : "spread"
   });
@@ -299,9 +295,9 @@ exports.addSpreaded = function(id, noteId, callback){
               user : id,
               date : new Date(),
               answer : true,
-              pos : {
-                x : instance.pos[0].x,
-                y : instance.pos[0].y
+              loc : {
+                type: { type: "Point" },
+                coordinates: [ instance.loc.coordinates[0], instance.loc.coordinates[1] ]
               }
             }
             note.spread.push(spread);
@@ -335,8 +331,10 @@ exports.addPosition = function(user, callback){
     else{
       var pos = {
         date : new Date(),
-        x : user.x,
-        y : user.y
+        loc : {
+          type: { type: "Point" },
+          coordinates: [ user.long, user.lat ]
+        }
       }
       instance.pos.push(pos);
       instance.save(function (err, instance, affected) {

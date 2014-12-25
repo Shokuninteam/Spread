@@ -13,7 +13,7 @@ exports.getUser = function(req, res){
 
 exports.createUser = function(req, res){
  if(req.body == null) res.status(400).end("Syntax error");
- else if(!req.body.nickname || !req.body.mail || !req.body.pwd || !req.body.avatar || !req.body.x || !req.body.y){
+ else if(!req.body.nickname || !req.body.mail || !req.body.pwd || !req.body.avatar || !req.body.lat || !req.body.long){
   res.status(400).end("Missing field");
  }
  else{
@@ -23,8 +23,8 @@ exports.createUser = function(req, res){
     pwd : req.body.pwd,
     avatar : req.body.avatar,
     pos : [{
-      x : req.body.x,
-      y : req.body.y
+      long : req.body.long,
+      lat : req.body.lat
     }]
   }
 
@@ -51,8 +51,8 @@ exports.modifyUser = function(req, res){
       pwd : req.body.pwd,
       avatar : req.body.avatar,
       pos : [{
-        x : req.body.x,
-        y : req.body.y
+        lat : req.body.lat,
+        long : req.body.long
       }]
     }
     userServices.modifyUser(id,user,function(code){
@@ -79,8 +79,8 @@ exports.addPosition = function(req, res){
   else{
     var user = {
       id : req.params.id,
-      x : req.body.x,
-      y : req.body.y
+      lat : req.body.lat,
+      long : req.body.long
     }
     userServices.addPosition(user, function(code){
       if(code == 201)

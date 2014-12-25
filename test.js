@@ -20,8 +20,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'f.bassard@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE6ZF8ZEfezfez00',
-      x : '48.860169',
-      y : '2.186220'
+      lat : '48.860169',
+      long : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -38,8 +38,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'juhuguet9@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE928F8ZEfezfez00',
-      x : '48.901030',
-      y : '2.275050'
+      lat : '48.901030',
+      long : '2.275050'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -56,8 +56,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Momo@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE928F8ZEfedezez00',
-      x : '48.936181',
-      y : '2.357443'
+      lat : '48.936181',
+      long : '2.357443'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -74,8 +74,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Adrien@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE994F8ZEfedezez00',
-      x : '48.892423',
-      y : '2.215331'
+      lat : '48.892423',
+      long : '2.215331'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -92,8 +92,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Des@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE94F8ZEfedezez00',
-      x : '48.905508',
-      y : '2.268489'
+      lat : '48.905508',
+      long : '2.268489'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -110,8 +110,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'MomoBrother@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE94F8ZEfedezez00',
-      x : '4.598056',
-      y : '-74.075833'
+      lat : '4.598056',
+      long : '-74.075833'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -128,8 +128,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'JulieFather@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE94fezZEfedezez00',
-      x : '-21.100000',
-      y : '55.600000'
+      lat : '-21.100000',
+      long : '55.600000'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -146,8 +146,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'KevinRose@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78FE94fezZEfedezez00',
-      x : '37.774929',
-      y : '-122.419416'
+      lat : '37.774929',
+      long : '-122.419416'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -164,8 +164,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'frankOncle@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '78394fezZEfedezez00',
-      x : '50.910374',
-      y : '4.355640'
+      lat : '50.910374',
+      long : '4.355640'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -182,8 +182,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'frankBrother@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '794fezZEfedezez00',
-      x : '49.494370',
-      y : '0.107929'
+      lat : '49.494370',
+      long : '0.107929'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -200,8 +200,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Frank2@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '79422fezZEfedezez00',
-      x : '-41.286460',
-      y : '174.776236'
+      lat : '-41.286460',
+      long : '174.776236'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -218,8 +218,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Julie2@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '79D422fezZEfedezez00',
-      x : '-41.286460',
-      y : '174.776236'
+      lat : '-41.286460',
+      long : '174.776236'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -236,8 +236,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Akhenaton@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '7922fezZEfedezez00',
-      x : '26.820553',
-      y : '30.802498'
+      lat : '26.820553',
+      long : '30.802498'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -254,8 +254,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'MomoMother@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '7922fezZEfedez00',
-      x : '12.350000',
-      y : '-1.516667'
+      lat : '12.350000',
+      long : '-1.516667'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -272,8 +272,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'PotoVlad@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '7922fdezezZEfedez00',
-      x : '55.755826',
-      y : '37.617300'
+      lat : '55.755826',
+      long : '37.617300'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -290,8 +290,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'ShokuninHome@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '7922fdezezZEfedez00',
-      x : '35.689487',
-      y : '139.691706'
+      lat : '35.689487',
+      long : '139.691706'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -308,8 +308,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'ShokuninHome@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '7922fdezezZEfedez00',
-      x : '48.860169',
-      y : '2.186220'
+      lat : '48.860169',
+      long : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -326,8 +326,8 @@ describe('Spread Express server-side : Node REST API', function(){
       mail: 'Pounette@gmail.com',
       pwd : 'UnbreakablePwd',
       avatar : '7922fdezezZEfedez00',
-      x : '52.520007',
-      y : '13.404954'
+      lat : '52.520007',
+      long : '13.404954'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -343,8 +343,8 @@ describe('Spread Express server-side : Node REST API', function(){
       nickname: 'John',
       mail: 'john@test.com',
       avatar : '78FE6ZF8ZEfezfez00',
-      x : '34.9437432',
-      y : '23.4298429'
+      lat : '34.9437432',
+      long : '23.4298429'
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(400);
@@ -368,9 +368,8 @@ describe('Spread Express server-side : Node REST API', function(){
       expect(res.body.nickname).to.be.equal('Frank');
       expect(res.body.mail).to.be.equal('f.bassard@gmail.com');
       expect(res.body.avatar).to.be.equal('78FE6ZF8ZEfezfez00');
-      console.log(res.body.loc);
-      expect(res.body.loc.coordinates[0]).to.be.equal(48.860169);
-      expect(res.body.loc.coordinates[1]).to.be.equal(2.186220);
+      expect(res.body.loc.coordinates[1]).to.be.equal(48.860169);
+      expect(res.body.loc.coordinates[0]).to.be.equal(2.186220);
       expect(res.body.pos[0].date).not.to.be.equal.null;
       expect(res.status).to.be.equal(200);
       done();
@@ -383,8 +382,8 @@ describe('Spread Express server-side : Node REST API', function(){
         user : current.userId[0],
         content : "My fictive note, testing my app",
         tags : "tag1 tag2",
-        x : '48.860169',
-        y : '2.186220'
+        lat : '48.860169',
+        long : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -400,8 +399,8 @@ describe('Spread Express server-side : Node REST API', function(){
       user : current.userId[0],
       content : "My fictive note, testing my app",
       tags : "tag1 tag2",
-      x : '48.860169',
-      y : '2.186220'
+      lat : '48.860169',
+      long : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -417,8 +416,8 @@ describe('Spread Express server-side : Node REST API', function(){
       user : current.userId[0],
       content : "My fictive Killing note, testing my app",
       tags : "tag1 tag2",
-      x : '48.860169',
-      y : '2.186220'
+      lat : '48.860169',
+      long : '2.186220'
     })
     .end(function(e, res){
       expect(res.header.id).not.to.be.null;
@@ -535,14 +534,13 @@ describe('Spread Express server-side : Node REST API', function(){
   it('it should add a new position for the user : (Paris)', function(done){
     superagent.post(url + '/users/' + current.userId[0] + '/positions')
     .send({
-      x : 48.856614,
-      y : 2.352222
+      lat : 48.856614,
+      long : 2.352222
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(201);
       done();
     })
   })
-
 
 })
