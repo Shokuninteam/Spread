@@ -83,7 +83,6 @@ var innerFunction = {
       else
         return console.log(err);
       });
-
   }
 }
 // User services
@@ -223,20 +222,36 @@ exports.createNote = function(note, callback){
     answer : "spread"
   });
 
-  instance.save(function (err, note, affected) {
-    if (err) {
-      console.log(err);
-      callback(409);
+  innerFunction.getTenClothestUsers(instance.spread, function(users){
+
+    for(var i = 0; i<users.length; i++){
+      instance.spread.push({
+        user : users[i].id,
+        date : new Date(),
+        loc : {
+          type: { type: "Point" },
+          coordinates: [ users[i].loc.coordinates[0], users[i].loc.coordinates[1]]
+        },
+        answer : "none"
+      });
     }
-    else {
-      if(affected == 1){
-        innerFunction.addHistory(note.user, note.id, function(){
-          callback(201, note.id);
-        });
+
+    instance.save(function (err, note, affected) {
+      if (err) {
+        console.log(err);
+        callback(409);
       }
-      else callback(409);
-    }
+      else {
+        if(affected == 1){
+          innerFunction.addHistory(note.user, note.id, function(){
+            callback(201, note.id);
+          });
+        }
+        else callback(409);
+      }
+    });
   });
+
 }
 
 exports.addFav = function(id, noteId, callback){
