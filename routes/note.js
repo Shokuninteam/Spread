@@ -49,7 +49,7 @@ exports.addFav = function(req, res){
 };
 
 exports.spreadedNote = function(req, res){
-  noteServices.spreadNote(req.params.id, req.body.noteId, function(code){
+  noteServices.spreadNote(req.params.id, req.body.long, req.body.lat, req.body.noteId, function(code){
     if(code == 200)
       res.status(code).end("Note spreaded");
     else
@@ -59,7 +59,7 @@ exports.spreadedNote = function(req, res){
 
 
 exports.discardNote = function(req, res){
-  noteServices.discardNote(req.params.id, req.body.noteId, function(code){
+  noteServices.discardNote(req.params.id, req.body.long, req.body.lat, req.body.noteId, function(code){
     if(code == 200)
       res.status(code).end("Note killed");
     else

@@ -22,8 +22,6 @@ var schemas = {
       }
     }],
     favs : [String],
-    spreaded : [String],
-    history : [String],
     settings : {},
     active : Boolean
   }),
@@ -47,22 +45,6 @@ var schemas = {
 }
 
 var innerFunction = {
-  addHistory : function(idUser, idNote, callback){
-    db.on('error', console.error.bind(console, 'connection error:'));
-      var UserModel = mongoose.model('User', schemas.userSchema);
-
-      UserModel.findById(idUser, function(err, instance){
-        if(!err){
-          instance.history.push(idNote);
-          instance.save(function (err, instance, affected) {
-            callback();
-          });
-        } else {
-          callback();
-        }
-    });
-  },
-
   /**
   * Seek the 10 closest users that aren't in the current spreadTab
   * Call the callback with those 10 users
@@ -267,9 +249,7 @@ exports.createNote = function(note, callback){
       }
       else {
         if(affected == 1){
-          innerFunction.addHistory(note.user, note.id, function(){
-            callback(201, note.id);
-          });
+          callback(201, note.id);
         }
         else callback(409);
       }
@@ -305,64 +285,54 @@ exports.addFav = function(id, noteId, callback){
 * The note's spread for the given user is updated
 * The note is spreaded to the 10 closests users
 */
-exports.spreadNote = function(id, noteId, callback){
+exports.spreadNote = function(id, long, lat, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
-  var UserModel = mongoose.model('User', schemas.userSchema);
   var NoteModel = mongoose.model('Note', schemas.noteSchema);
-
-  UserModel.findById(id, function(err, instance){
-    if(err) callback(404);
-    else{
-      instance.spreaded.push(noteId);
-      NoteModel.findById(noteId, function (err, note){
-        if(err) callback(404);
-        else{
-          for(var i = 0; i<note.spread; i++){
-            if(note.spread[i].user == id && note.spread[i].answer == "none"){
-              note.spread[i].answer = "spread";
-              note.spread[i].loc = {
-                type: "Point",
-                coordinates: [ instance.loc.coordinates[0], instance.loc.coordinates[1] ]
-              }
-              note.spread[i].date = new Date();
+    NoteModel.findById(noteId, function (err, note){
+      if(err) {
+        callback(404);
+      }
+      else{
+        for(var i = 0; i<note.spread.length; i++){
+          if(note.spread[i].user == id && note.spread[i].answer == "none"){
+            note.spread[i].answer = "spread";
+            note.spread[i].loc = {
+              type: "Point",
+              coordinates: [ long, lat ]
             }
+            note.spread[i].date = new Date();
+          }
+        }
+        innerFunction.getTenClothestUsers(note.spread, function(users){
+          for(var i = 0; i<users.length; i++){
+            note.spread.push({
+              user : users[i].id,
+              date : new Date(),
+              loc : {
+                type: "Point",
+                coordinates: [ users[i].loc.coordinates[0], users[i].loc.coordinates[1]]
+              },
+              answer : "none"
+            });
           }
 
-          innerFunction.getTenClothestUsers(note.spread, function(users){
-
-            for(var i = 0; i<users.length; i++){
-              note.spread.push({
-                user : users[i].id,
-                date : new Date(),
-                loc : {
-                  type: "Point",
-                  coordinates: [ users[i].loc.coordinates[0], users[i].loc.coordinates[1]]
-                },
-                answer : "none"
-              });
+        note.save(function (err, note, affected){
+          if (err) {
+            console.log("error " + err );
+            callback(404);
+          }
+          else {
+            if(affected == 1){
+              callback(200);
             }
-
-            note.save(function (err, note, affected){
-              if (err) callback(404);
-              else {
-                if(affected == 1){
-                  callback(200);
-                }
-                else callback(404);
-              }
-            });
-          });
-        }
-      });
-      instance.save(function (err, instance, affected) {
-        if (err) callback(404);
-        else {
-          if(affected == 1) callback(200);
-          else callback(404);
-        }
-      });
-    }
+            else{
+              console.log("default");
+              callback(404);
+            }
+          }});
+        });
+      }
   });
 }
 
@@ -370,32 +340,25 @@ exports.spreadNote = function(id, noteId, callback){
   * A user choose to discard a note
   * Note's updated
   */
-exports.discardNote = function(id, noteId, callback){
+exports.discardNote = function(id, long, lat, noteId,  callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
-  var UserModel = mongoose.model('User', schemas.userSchema);
   var NoteModel = mongoose.model('Note', schemas.noteSchema);
 
-  UserModel.findById(id, function(err, instance){
+  NoteModel.findById(noteId, function (err, note){
     if(err) callback(404);
     else{
-      instance.spreaded.push(noteId);
-      NoteModel.findById(noteId, function (err, note){
-        if(err) callback(404);
-        else{
-          for(var i = 0; i<note.spread; i++){
-            if(note.spread[i].user == id && note.spread[i].answer == "none"){
-              note.spread[i].answer = "discard";
-              note.spread[i].loc = {
-                type: "Point",
-                coordinates: [ instance.loc.coordinates[0], instance.loc.coordinates[1] ]
-              }
-              note.spread[i].date = new Date();
-            }
+      for(var i = 0; i<note.spread.length; i++){
+        if(note.spread[i].user == id && note.spread[i].answer == "none"){
+          note.spread[i].answer = "discard";
+          note.spread[i].loc = {
+            type: "Point",
+            coordinates: [ long, lat ]
           }
+          note.spread[i].date = new Date();
         }
-      });
-      instance.save(function (err, instance, affected) {
+      }
+      note.save(function (err, instance, affected) {
         if (err) callback(404);
         else {
           if(affected == 1) callback(200);
@@ -455,6 +418,41 @@ exports.getUnansweredNotes = function(id, callback){
       }
     }
   }, function(err, notes){
+    if(!err){
+      callback(notes);
+    }
+    else
+      return console.log(err);
+  });
+}
+
+exports.getSpreaded = function(id, callback){
+  db.on('error', console.error.bind(console, 'connection error:'));
+
+  var NoteModel = mongoose.model('Note', schemas.noteSchema);
+
+  NoteModel.find({
+    spread: {
+      $elemMatch: {
+        user: id,
+        answer: "spread"
+      }
+    }
+  }, function(err, notes){
+    if(!err){
+      callback(notes);
+    }
+    else
+      return console.log(err);
+    });
+}
+
+exports.getHistory = function(id, callback){
+  db.on('error', console.error.bind(console, 'connection error:'));
+
+  var NoteModel = mongoose.model('Note', schemas.noteSchema);
+
+  NoteModel.find({'spread.0.user' : id}, function(err, notes){
     if(!err){
       callback(notes);
     }

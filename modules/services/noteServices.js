@@ -13,13 +13,13 @@ exports.addFav = function(id, noteId, callback){
   mongooseServices.addFav(id, noteId, callback);
 }
 
-exports.spreadNote = function(id, noteId, callback){
-  mongooseServices.spreadNote(id, noteId, callback);
+exports.spreadNote = function(id, long, lat, noteId, callback){
+  mongooseServices.spreadNote(id, long, lat, noteId, callback);
 }
 
 
-exports.discardNote = function(id, noteId, callback){
-  mongooseServices.discardNote(id, noteId, callback);
+exports.discardNote = function(id, long, lat, noteId, callback){
+  mongooseServices.discardNote(id, long, lat, noteId, callback);
 }
 
 exports.getUnansweredNotes = function(id, callback){
@@ -41,29 +41,9 @@ exports.getFavs = function(id, callback){
 }
 
 exports.getSpreaded = function(id, callback){
-  var spread = new Array();
-  //handle user callback
-  mongooseServices.getUserById(id, function(user){
-    var notesCount = user.spreaded.length;
-    for(var i=0; i<user.spreaded.length; i++){
-      mongooseServices.getNoteById(user.spreaded[i], function(note){
-        spread.push(note);
-        if (spread.length === notesCount) callback(spread);
-      });
-    }
-  });
+  mongooseServices.getSpreaded(id, callback);
 }
 
 exports.getHistory = function(id, callback){
-  var hist = new Array();
-  //handle user callback
-  mongooseServices.getUserById(id, function(user){
-    var notesCount = user.history.length;
-    for(var i=0; i<user.history.length; i++){
-      mongooseServices.getNoteById(user.history[i], function(note){
-        hist.push(note);
-        if (hist.length === notesCount) callback(hist);
-      });
-    }
-  });
+  mongooseServices.getHistory(id, callback);
 }

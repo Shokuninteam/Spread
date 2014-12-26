@@ -452,16 +452,16 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
       expect(res.body.length).to.be.equal(3);
-      expect(res.body[0]._id).to.be.equal(current.noteIds[0]);
-      expect(res.body[1]._id).to.be.equal(current.noteIds[1]);
       done();
     })
   })
 
-  it('it should add the first note as spreaded by the user', function(done){
-    superagent.post(url + '/users/' + current.userId[0] + '/notes/spreaded')
+  it('it should add the first note as spreaded by the second user', function(done){
+    superagent.post(url + '/users/' + current.userId[1] + '/notes/spreaded')
     .send({
-      noteId : current.noteIds[0]
+      noteId : current.noteIds[0],
+      lat : '48.901030',
+      long : '2.275050'
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -469,10 +469,12 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should add the second note as spreaded by the user', function(done){
-    superagent.post(url + '/users/' + current.userId[0] + '/notes/spreaded')
+  it('it should add the second note as spreaded by the second user', function(done){
+    superagent.post(url + '/users/' + current.userId[1] + '/notes/spreaded')
     .send({
-      noteId : current.noteIds[1]
+      noteId : current.noteIds[1],
+      lat : '48.901030',
+      long : '2.275050'
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -480,8 +482,8 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should retrieve the 2 notes as part of the user\'s spreaded', function(done){
-    superagent.get(url + '/users/' + current.userId[0] + '/notes/spreaded')
+  it('it should retrieve the 2 notes as part of the second user\'s spreaded', function(done){
+    superagent.get(url + '/users/' + current.userId[1] + '/notes/spreaded')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -493,10 +495,12 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
 
-  it('it should add the third note as killed by the user', function(done){
-    superagent.post(url + '/users/' + current.userId[0] + '/notes/kill')
+  it('it should add the third note as discarded by Meiske', function(done){
+    superagent.post(url + '/users/' + current.userId[16] + '/notes/discard')
     .send({
-      noteId : current.noteIds[2]
+      noteId : current.noteIds[2],
+      lat : '48.860169',
+      long : '2.186220'
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
