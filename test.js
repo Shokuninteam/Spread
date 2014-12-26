@@ -446,7 +446,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should retrieve the 2 notes as part of the user\'s history', function(done){
+  it('it should retrieve the 3 notes as part of the user\'s history', function(done){
     superagent.get(url + '/users/' + current.userId[0] + '/notes/history')
     .send()
     .end(function(e, res){
@@ -507,9 +507,6 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-
-
-
 
   it('it should add the first note as favored by the user', function(done){
     superagent.post(url + '/users/' + current.userId[0] + '/notes/favoris')
