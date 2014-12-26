@@ -48,8 +48,8 @@ exports.addFav = function(req, res){
   });
 };
 
-exports.addSpreaded = function(req, res){
-  noteServices.addSpreaded(req.params.id, req.body.noteId, function(code){
+exports.spreadedNote = function(req, res){
+  noteServices.spreadNote(req.params.id, req.body.noteId, function(code){
     if(code == 200)
       res.status(code).end("Note spreaded");
     else

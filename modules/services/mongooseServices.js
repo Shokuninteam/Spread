@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var tools = require('./tools');
 var uri = "mongodb://127.0.0.1:27017/Spread";
 
 mongoose.connect(uri);
@@ -306,7 +305,7 @@ exports.addFav = function(id, noteId, callback){
 * The note's spread for the given user is updated
 * The note is spreaded to the 10 closests users
 */
-exports.addSpreaded = function(id, noteId, callback){
+exports.spreadNote = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
 
   var UserModel = mongoose.model('User', schemas.userSchema);
@@ -369,7 +368,7 @@ exports.addSpreaded = function(id, noteId, callback){
 
 /**
   * A user choose to discard a note
-  * Note's updated 
+  * Note's updated
   */
 exports.discardNote = function(id, noteId, callback){
   db.on('error', console.error.bind(console, 'connection error:'));
