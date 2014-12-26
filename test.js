@@ -393,8 +393,6 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  /*
-
   it('it should create a second note assigned to the same user', function(done){
     superagent.post(url + '/notes')
     .send({
@@ -434,6 +432,16 @@ describe('Spread Express server-side : Node REST API', function(){
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
+      done();
+    })
+  })
+
+  it('it should give 3 unanswered notes to Meiske', function(done){
+    superagent.get(url + '/users/' + current.userId[16] + '/notes/nanswered')
+    .send()
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      expect(res.body.length).to.be.equal(3);
       done();
     })
   })
@@ -544,5 +552,5 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-*/
+
 })
