@@ -33,6 +33,7 @@ app.get('/users/:id/notes/history', note.gethistory);
 app.post('/users/:id/notes/spreaded', note.spreadedNote);
 app.post('/users/:id/notes/kill', note.discardNote);
 app.get('/users/:id/notes/spreaded', note.getSpreaded);
+app.get('/users/:id/notes/nanswered', note.getUnansweredNotes);
 app.get('/notes/:id', note.getNote);
 app.post('/notes', note.createNote);
 

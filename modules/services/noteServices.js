@@ -22,6 +22,9 @@ exports.discardNote = function(id, noteId, callback){
   mongooseServices.discardNote(id, noteId, callback);
 }
 
+exports.getUnansweredNotes = function(id, callback){
+  mongooseServices.getUnansweredNotes(id, callback);
+}
 
 exports.getFavs = function(id, callback){
 	var favs = new Array();

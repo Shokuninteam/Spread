@@ -393,6 +393,8 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
+  /*
+
   it('it should create a second note assigned to the same user', function(done){
     superagent.post(url + '/notes')
     .send({
@@ -493,7 +495,7 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-  
+
 
 
 
@@ -542,5 +544,5 @@ describe('Spread Express server-side : Node REST API', function(){
       done();
     })
   })
-
+*/
 })

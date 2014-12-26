@@ -99,3 +99,12 @@ exports.getUsersPositions = function(req, res){
   var id = req.params.id;
   res.json('{}');
 };
+
+exports.getUnansweredNotes = function(req, res){
+  noteServices.getUnansweredNotes(req.params.id, function(notes){
+    if(notes)
+      res.json(notes);
+    else
+      res.status(404).end("Unable to get unanswered notes");
+  });
+};

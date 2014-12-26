@@ -383,7 +383,6 @@ exports.discardNote = function(id, noteId, callback){
       NoteModel.findById(noteId, function (err, note){
         if(err) callback(404);
         else{
-          console.log(note);
           for(var i = 0; i<note.spread; i++){
             if(note.spread[i].user == id && note.spread[i].answer == "none"){
               note.spread[i].answer = "discard";
@@ -440,5 +439,26 @@ exports.addPosition = function(user, callback){
         }
       });
     }
+  });
+}
+
+exports.getUnansweredNotes = function(id, callback){
+  db.on('error', console.error.bind(console, 'connection error:'));
+
+  var NoteModel = mongoose.model('Note', schemas.noteSchema);
+
+  NoteModel.find({
+    spread: {
+      $elemMatch: {
+         user: id,
+         answer: "none"
+      }
+    }
+  }, function(err, notes){
+    if(!err){
+      callback(notes);
+    }
+    else
+      return console.log(err);
   });
 }
