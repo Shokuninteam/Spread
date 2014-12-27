@@ -437,7 +437,7 @@ describe('Spread Express server-side : Node REST API', function(){
   })
 
   it('it should give 3 unanswered notes to Meiske', function(done){
-    superagent.get(url + '/users/' + current.userId[16] + '/notes/nanswered')
+    superagent.get(url + '/users/' + current.userId[16] + '/notes/unanswered')
     .send()
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
