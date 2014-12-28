@@ -19,3 +19,11 @@ exports.modifyUser = function(id, user, callback){
 exports.addPosition = function(user, callback){
   mongooseServices.addPosition(user, callback);
 }
+
+exports.logInNickname = function(nickname, pwd, callback){
+  mongooseServices.logInNickname(nickname, pwd, callback);
+}
+
+exports.logInMail = function(mail, pwd, callback){
+  mongooseServices.logInMail(mail, pwd, callback);
+}

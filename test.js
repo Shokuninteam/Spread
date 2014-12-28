@@ -554,4 +554,30 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
+  it('it should (mail) authentify the first user', function(done){
+    superagent.put(url + '/users')
+    .send({
+      mail: 'f.bassard@gmail.com',
+      pwd : 'UnbreakablePwd',
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      expect(res.header.id).to.be.equal(current.userId[0]);
+      done();
+    })
+  })
+
+  it('it should (nickname) authentify the first user', function(done){
+    superagent.put(url + '/users')
+    .send({
+      nickname: 'Frank',
+      pwd : 'UnbreakablePwd',
+    })
+    .end(function(e, res){
+      expect(res.status).to.be.equal(200);
+      expect(res.header.id).to.be.equal(current.userId[0]);
+      done();
+    })
+  })
+
 })

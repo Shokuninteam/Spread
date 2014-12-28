@@ -460,3 +460,37 @@ exports.getHistory = function(id, callback){
       return console.log(err);
   });
 }
+
+exports.logInNickname = function(nickname, pwd, callback){
+  db.on('error', console.error.bind(console, 'connection error:'));
+  var UserModel = mongoose.model('User', schemas.userSchema);
+  console.log("nickname");
+  console.log(nickname);
+  console.log(pwd);
+  UserModel.findOne({ nickname: nickname, pwd : pwd }, function(err, user){
+    if(!err){
+      callback(user.id, 200);
+    }
+    else{
+      console.log(err);
+      return callback(undefined, 404);
+    }
+  });
+}
+
+exports.logInMail = function(mail, pwd, callback){
+  db.on('error', console.error.bind(console, 'connection error:'));
+  var UserModel = mongoose.model('User', schemas.userSchema);
+  console.log("mail");
+  console.log(mail);
+  console.log(pwd);
+  UserModel.findOne({ mail: mail, pwd : pwd }, function(err, user){
+    if(!err){
+      callback(user.id, 200);
+    }
+    else{
+      console.log(err);
+      return callback(undefined, 404);
+    }
+  });
+}

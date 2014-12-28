@@ -27,7 +27,6 @@ exports.createUser = function(req, res){
       lat : req.body.lat
     }]
   }
-
   userServices.createUser(user, function(code, id){
     if(code == 201){
       res.setHeader("url", req.url);
@@ -61,7 +60,7 @@ exports.modifyUser = function(req, res){
       else
         res.status(code).end("User modified");
     });
-}
+  }
 };
 
 exports.deleteUser = function(req, res){
@@ -75,13 +74,13 @@ exports.deleteUser = function(req, res){
 };
 
 exports.addPosition = function(req, res){
-  if(req.body == null) res.status(400).end("Syntax error");
+  if(!req.body) res.status(400).end("Syntax error");
   else{
     var user = {
       id : req.params.id,
       lat : req.body.lat,
       long : req.body.long
-    }
+    };
     userServices.addPosition(user, function(code){
       if(code == 201)
         res.status(code).end("Position added");
@@ -90,5 +89,28 @@ exports.addPosition = function(req, res){
       if(code == 404)
         res.status(code).end("User unable");
     });
+  }
 }
+
+exports.logIn = function(req, res){
+  console.log(req.body.nickname);
+  console.log(req.body.mail);
+  console.log(req.body.pwd);
+  if(req.body.nickname && req.body.pwd){
+    userServices.logInNickname(req.body.nickname, req.body.pwd,  function(id, code){
+      if(code == 404) res.status(code).end("Nonexistent user");
+      else{
+        res.setHeader("id", id);
+        res.status(code).end();
+      }
+    });
+  } else if(req.body.mail && req.body.pwd){
+    userServices.logInMail(req.body.mail, req.body.pwd, function(id, code){
+      if(code == 404) res.status(code).end("Nonexistent user");
+      else{
+        res.setHeader("id", id);
+        res.status(code).end();
+      }
+    });
+  } else res.status(400).end("Syntax error");
 };

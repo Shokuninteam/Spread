@@ -23,6 +23,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/users/:id', user.getUser);
+app.put('/users', user.logIn);
 app.post('/users', user.createUser);
 app.put('/users/:id', user.modifyUser);
 app.delete('/users/:id', user.deleteUser);
