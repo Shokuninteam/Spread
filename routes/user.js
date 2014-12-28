@@ -93,9 +93,7 @@ exports.addPosition = function(req, res){
 }
 
 exports.logIn = function(req, res){
-  console.log(req.body.nickname);
-  console.log(req.body.mail);
-  console.log(req.body.pwd);
+  console.log(req.body);
   if(req.body.nickname && req.body.pwd){
     userServices.logInNickname(req.body.nickname, req.body.pwd,  function(id, code){
       if(code == 404) res.status(code).end("Nonexistent user");
@@ -112,5 +110,5 @@ exports.logIn = function(req, res){
         res.status(code).end();
       }
     });
-  } else res.status(400).end("Syntax error");
+  } else res.status(400).end('{"error" : "syntax error"}');
 };
