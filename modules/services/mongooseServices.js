@@ -468,12 +468,12 @@ exports.logInNickname = function(nickname, pwd, callback){
   console.log(nickname);
   console.log(pwd);
   UserModel.findOne({ nickname: nickname, pwd : pwd }, function(err, user){
-    if(!err){
+    if(!err && user){
       callback(user.id, 200);
     }
     else{
-      console.log(err);
-      return callback(undefined, 404);
+      if (err) console.log(err);
+      callback(undefined, 404);
     }
   });
 }
@@ -485,12 +485,12 @@ exports.logInMail = function(mail, pwd, callback){
   console.log(mail);
   console.log(pwd);
   UserModel.findOne({ mail: mail, pwd : pwd }, function(err, user){
-    if(!err){
+    if(!err && user){
       callback(user.id, 200);
     }
     else{
-      console.log(err);
-      return callback(undefined, 404);
+      if (err) console.log(err);
+      callback(undefined, 404);
     }
   });
 }
