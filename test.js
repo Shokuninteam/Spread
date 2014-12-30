@@ -367,7 +367,6 @@ describe('Spread Express server-side : Node REST API', function(){
     .end(function(e, res){
       expect(res.body.nickname).to.be.equal('Frank');
       expect(res.body.mail).to.be.equal('f.bassard@gmail.com');
-      expect(res.body.avatar).to.be.equal('78FE6ZF8ZEfezfez00');
       expect(res.body.loc.coordinates[1]).to.be.equal(48.860169);
       expect(res.body.loc.coordinates[0]).to.be.equal(2.186220);
       expect(res.body.pos[0].date).not.to.be.equal.null;
