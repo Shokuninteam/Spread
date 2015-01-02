@@ -9,7 +9,7 @@ var schemas = {
     nickname : String,
     mail : String,
     pwd : String,
-    avatar : Buffer,
+    avatar : String,
     loc : {
        type: { type: String },
        coordinates : [ Number ]
