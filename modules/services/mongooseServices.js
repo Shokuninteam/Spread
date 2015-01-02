@@ -217,6 +217,7 @@ exports.createNote = function(note, callback){
   instance.user = note.user;
   instance.content = note.content;
   instance.tags = note.tags;
+  instance.date = new Date();
 
   instance.spread.push({
     user : note.user,
