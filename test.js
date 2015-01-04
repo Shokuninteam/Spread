@@ -423,7 +423,7 @@ describe('Spread Express server-side : Node REST API', function(){
     superagent.post(url + '/notes')
     .send({
         user : current.userId[0],
-        content : "My fictive note, testing my app",
+        content : "First note by franky ! ",
         tags : "tag1 tag2",
         lat : '48.860169',
         long : '2.186220'
@@ -440,7 +440,7 @@ describe('Spread Express server-side : Node REST API', function(){
     superagent.post(url + '/notes')
     .send({
       user : current.userId[0],
-      content : "My fictive note, testing my app",
+      content : "Second note by Franky !",
       tags : "tag1 tag2",
       lat : '48.860169',
       long : '2.186220'
@@ -457,7 +457,7 @@ describe('Spread Express server-side : Node REST API', function(){
     superagent.post(url + '/notes')
     .send({
       user : current.userId[0],
-      content : "My fictive Killing note, testing my app",
+      content : "Hey, hey thir note !",
       tags : "tag1 tag2",
       lat : '48.860169',
       long : '2.186220'
