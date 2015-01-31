@@ -1,0 +1,11 @@
+Tout les password = pwd
+
+User avec 3 notes = Frank
+
+User avec 3 notes a repondre = Meiske
+
+User ayant spread les 2 premiere notes de Frank = Julie
+
+User ayant discard la 3e note de Frank = Meiske
+
+User ayant fav la seconde note = Frank

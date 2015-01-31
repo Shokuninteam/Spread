@@ -62,7 +62,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Frank',
       mail: 'f.bassard@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '48.860169',
       long : '2.186220'
@@ -80,7 +80,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Julie',
       mail: 'juhuguet9@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '48.901030',
       long : '2.275050'
@@ -98,7 +98,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Mohamed',
       mail: 'Momo@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '48.936181',
       long : '2.357443'
@@ -116,7 +116,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Adrien',
       mail: 'Adrien@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '48.892423',
       long : '2.215331'
@@ -134,7 +134,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Desirée',
       mail: 'Des@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '48.905508',
       long : '2.268489'
@@ -152,7 +152,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'MomoBrother',
       mail: 'MomoBrother@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '4.598056',
       long : '-74.075833'
@@ -170,7 +170,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'JulieFather',
       mail: 'JulieFather@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '-21.100000',
       long : '55.600000'
@@ -188,7 +188,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'KevinRose',
       mail: 'KevinRose@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '37.774929',
       long : '-122.419416'
@@ -206,7 +206,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'frankOncle',
       mail: 'frankOncle@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '50.910374',
       long : '4.355640'
@@ -224,7 +224,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'frankBrother',
       mail: 'frankBrother@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '49.494370',
       long : '0.107929'
@@ -242,7 +242,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Frank2',
       mail: 'Frank2@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '-41.286460',
       long : '174.776236'
@@ -260,7 +260,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Julie2',
       mail: 'Julie2@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '-41.286460',
       long : '174.776236'
@@ -278,7 +278,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Akhenaton',
       mail: 'Akhenaton@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '26.820553',
       long : '30.802498'
@@ -296,7 +296,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'MomoMother',
       mail: 'MomoMother@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '12.350000',
       long : '-1.516667'
@@ -314,7 +314,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'PotoVlad',
       mail: 'PotoVlad@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '55.755826',
       long : '37.617300'
@@ -332,7 +332,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'ShokuninHome',
       mail: 'ShokuninHome@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '35.689487',
       long : '139.691706'
@@ -350,7 +350,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'Meiske',
       mail: 'ShokuninHome@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '48.860169',
       long : '2.186220'
@@ -368,7 +368,7 @@ describe('Spread Express server-side : Node REST API', function(){
     .send({
       nickname: 'pounette',
       mail: 'Pounette@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
       avatar : avatarMale,
       lat : '52.520007',
       long : '13.404954'
@@ -419,7 +419,7 @@ describe('Spread Express server-side : Node REST API', function(){
     })
   })
 
-  it('it should create a note assigned to the previously updated user', function(done){
+  it('it should create a note assigned to the first user', function(done){
     superagent.post(url + '/notes')
     .send({
         user : current.userId[0],
@@ -601,7 +601,7 @@ describe('Spread Express server-side : Node REST API', function(){
     superagent.put(url + '/users')
     .send({
       mail: 'f.bassard@gmail.com',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
@@ -614,7 +614,7 @@ describe('Spread Express server-side : Node REST API', function(){
     superagent.put(url + '/users')
     .send({
       nickname: 'Frank',
-      pwd : 'UnbreakablePwd',
+      pwd : 'pwd',
     })
     .end(function(e, res){
       expect(res.status).to.be.equal(200);
